@@ -7,22 +7,21 @@ O **TecnoLog** é um software desenvolvido para a empresa
 Engenharia**.\
 Seu principal objetivo é otimizar o **gerenciamento de ordens de
 produção**, o **controle de estoque** (matéria-prima e produto acabado)
-e a **rastreabilidade de requisições**, reduzindo falhas no inventário e
-atrasos na produção.
+e a **rastreabilidade de requisições**, reduzindo falhas no inventário.
 
 ------------------------------------------------------------------------
 
 ## 🎯 Objetivos do Projeto
 
--   ✅ Garantir maior confiabilidade no **controle de estoque**.\
+-   ✅ Garantir maior confiabilidade no **controle de estoque**.
 -   ✅ Reduzir atrasos na produção causados por **erros de
-    inventário**.\
--   ✅ Permitir **rastreabilidade** das ordens de produção e do consumo
-    de materiais.\
+    inventário**.
+-   ✅ Permitir **rastreabilidade** dos pedidos e do consumo
+    de materiais.
 -   ✅ Enviar **notificações automáticas** para logística e responsáveis
-    sempre que uma nova ordem de produção for criada.\
+    sempre que um novo pedido for criado.
 -   ✅ Diferenciar o **estoque de matéria-prima (MP)** e de **produtos
-    acabados (PA)**.\
+    acabados (PA)**.
 -   ✅ Possibilitar o acompanhamento do **valor financeiro em estoque**
     (MP e PA).
 
@@ -30,9 +29,9 @@ atrasos na produção.
 
 ## 👨‍💻👩‍💻 Equipe de Desenvolvimento
 
--   Adrian Gobara Falci\
+-   Adrian Gobara Falci
 -   Lorena Gobara Falci
--   Maria Vitoria Garcia Pimenta\
+-   Maria Vitoria Garcia Pimenta
 
 ------------------------------------------------------------------------
 
