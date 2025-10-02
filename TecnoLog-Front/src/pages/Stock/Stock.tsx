@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
-import Input from "../../components/Input";
+import SearchBar from "../../components/SearchBar";
 import "../../App.css"
 
 const Stock: React.FC = () => {
@@ -17,9 +17,7 @@ const Stock: React.FC = () => {
         />
 
         <main className="flex-1 p-6 overflow-auto">
-                <Input
-                    placeholder="Item"
-                />
+        <SearchBar title="Produto"/>
         </main>
       </div>
     </div>

@@ -9,7 +9,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ title, userName, userEmail }) => {
     return (
         <header className="flex items-center justify-between px-12 py-6 bg-[#ededed]">
-            <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+            <h1 className="text-2xl font-bold text-[#1f3449]">{title}</h1>
 
             <div className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-full bg-[#1f3449] flex items-center justify-center text-white font-semibold shadow-lg">
