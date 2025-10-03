@@ -3,7 +3,7 @@ import React from "react";
 
 
 interface InputProps {
-    placeholder?: string;
+    placeholder: string;
 }
 
 const Input: React.FC<InputProps> = ({ placeholder }) => {

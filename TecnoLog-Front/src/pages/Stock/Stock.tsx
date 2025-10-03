@@ -1,26 +1,25 @@
 import React from "react";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
+import MainLayout from "../../layouts/MainLayout";
 import SearchBar from "../../components/SearchBar";
-import "../../App.css"
+import '../../App.css'
+import ValuesBar from "../../components/ValuesBar";
 
 const Stock: React.FC = () => {
   return (
-    <div className="flex h-screen">
-      <Sidebar />
-
-      <div className="flex-1 flex flex-col">
-        <Header
-          title="Estoque"
-          userName="Maria Pimenta"
-          userEmail="maria.log@tecnotooling.com"
-        />
-
-        <main className="flex-1 p-6 overflow-auto">
-        <SearchBar title="Produto"/>
-        </main>
+    <MainLayout
+      title="Estoque"
+      userName="Maria Pimenta"
+      userEmail="maria.log@tecnotooling.com"
+    >
+      <div className="flex flex-col space-y-0">
+        <div className="rounded-2xl shadow-md z-20">
+          <SearchBar title="Produto" />
+        </div>
+        <div className="rounded-2xl shadow-md -mt-4">
+          <ValuesBar stockValue="112.290,00" stockReal="1281" lowStock="3" zeroStock="2"/>
+        </div>
       </div>
-    </div>
+    </MainLayout>
   );
 };
 
