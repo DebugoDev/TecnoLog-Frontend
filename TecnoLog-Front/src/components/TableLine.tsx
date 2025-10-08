@@ -1,3 +1,4 @@
+import { Trash } from "lucide-react";
 import React from "react";
 
 interface TableLineProps {
@@ -25,13 +26,14 @@ const TableLine: React.FC<TableLineProps> = ({ columnOne, columnTwo, columnThree
     };
 
     return (
-        <div className="grid grid-cols-6 items-center h-12 font-medium border-b border-[#d6d6d6]">
+        <div className="grid grid-cols-[200px_300px_500px_250px_200px_250px_50px] items-center h-12 font-medium border-b border-[#d6d6d6]">
             <div className="flex items-center pl-2">{renderStatus()}</div>
             <p>{columnTwo}</p>
             <p>{columnThree}</p>
             <p>{columnFour}</p>
             <p>{columnFive}</p>
             <p>{columnSix}</p>
+            <Trash className="cursor-pointer"/>
         </div>
     );
 };

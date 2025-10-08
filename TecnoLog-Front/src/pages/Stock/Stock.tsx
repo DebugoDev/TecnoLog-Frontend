@@ -20,10 +20,7 @@ const Stock: React.FC = () => {
           <ValuesBar stockValue="112.290,00" stockReal="1281" lowStock="3" zeroStock="2"/>
         </div>
       </div>
-
-      <div>
-        <Table />
-      </div>
+      <Table />
     </MainLayout>
   );
 };
