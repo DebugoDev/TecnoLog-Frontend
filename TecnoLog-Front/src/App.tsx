@@ -1,10 +1,14 @@
 import React from "react";
 import Stock from "./pages/Stock/Stock";
-import Login from "./pages/Stock/Login";
+import AppRoutes from "./routes/AppRoutes";
 
 
 const App: React.FC = () => {
-  return <Login />;
+  return (
+    <>
+      <AppRoutes />
+    </>
+  );
 };
 
 export default App;
