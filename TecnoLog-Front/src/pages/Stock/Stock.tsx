@@ -17,7 +17,7 @@ const Stock: React.FC = () => {
           <SearchBar title="Produto" />
         </div>
         <div className="rounded-2xl shadow-md -mt-4">
-          <ValuesBar stockValue="112.290,00" stockReal="1281" lowStock="3" zeroStock="2"/>
+          <ValuesBar stockValue="112.290,00" lowStock="3" zeroStock="2"/>
         </div>
       </div>
       <Table />
