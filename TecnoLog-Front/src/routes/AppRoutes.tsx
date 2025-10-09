@@ -3,6 +3,7 @@ import React from "react";
 import Stock from "../pages/Stock/Stock";
 import Login from "../pages/Login/Login";
 import Movs from "../pages/Movs/Movs";
+import Users from "../pages/Users/Users";
 
 const AppRoutes: React.FC = () => {
     return (
@@ -11,6 +12,7 @@ const AppRoutes: React.FC = () => {
                 <Route path="/" element={<Stock />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/movs" element={<Movs />} />
+                <Route path="/users" element={<Users />} />
             </Routes>
         </Router>
     );
