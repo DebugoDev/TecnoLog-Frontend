@@ -1,4 +1,4 @@
-import { Trash } from "lucide-react";
+import { ChevronDown, ChevronUp, Trash } from "lucide-react";
 import React from "react";
 
 interface TableLineProps {
@@ -20,9 +20,24 @@ const TableLine: React.FC<TableLineProps> = ({ columnOne, columnTwo, columnThree
                 return <p className="text-[#E9C71C] font-bold text-2xl">•</p>;
             case "Ok":
                 return <p className="text-[#33C014] font-bold text-2xl">•</p>;
+            case "Inbound":
+                return <p className="text-[#33C014] text-2xl"><ChevronUp /></p>;
+            case "Outbound":
+                return <p className="text-[#DA201D] text-2xl"><ChevronDown /></p>;
             default:
                 return <p className="text-gray-500">{columnOne}</p>;
-        }
+        };
+    };
+
+    const renderQuantity = () => {
+        switch (columnOne) {
+            case "Inbound":
+                return <p className="text-[#33C014]">+{columnSix}</p>;
+            case "Outbound":
+                return <p className="text-[#DA201D]">-{columnSix}</p>;
+            default:
+                return <p className="text-[#1f3449]">{columnSix}</p>;
+        };
     };
 
     return (
@@ -32,7 +47,7 @@ const TableLine: React.FC<TableLineProps> = ({ columnOne, columnTwo, columnThree
             <p>{columnThree}</p>
             <p>{columnFour}</p>
             <p>{columnFive}</p>
-            <p>{columnSix}</p>
+            <p>{renderQuantity()}</p>
             <Trash className="cursor-pointer"/>
         </div>
     );

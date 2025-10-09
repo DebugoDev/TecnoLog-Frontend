@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, ShoppingCart, Bell, Users, Package, Grid } from "lucide-react";
-import WhiteLogo from '../assets/images/logo-branca.png'
+import WhiteLogo from "../assets/images/logo-branca.png";
 
 export default function Sidebar() {
     const [open, setOpen] = useState(false);
@@ -10,16 +10,20 @@ export default function Sidebar() {
         { name: "Estoque", icon: <Grid size={22} /> },
         { name: "Notificações", icon: <Bell size={22} /> },
         { name: "Usuários", icon: <Users size={22} /> },
-        { name: "Inbound e Outbound", icon: <Package size={22} /> },
+        { name: "Entrada e Saída", icon: <Package size={22} /> },
     ];
 
     return (
         <div
-            className={`h-screen bg-[#1f3449] text-white flex flex-col justify-between transition-all duration-100
-        ${open ? "w-72" : "w-16"}`}
+            className={`fixed top-0 left-0 h-screen bg-[#1f3449] text-white flex flex-col justify-between
+            transition-all duration-300 ease-in-out z-50
+            ${open ? "w-72" : "w-16"}`}
         >
             <div>
-                <div className="flex items-center justify-between px-4 py-4 cursor-pointer" onClick={() => setOpen(!open)}>
+                <div
+                    className="flex items-center justify-between px-4 py-4 cursor-pointer"
+                    onClick={() => setOpen(!open)}
+                >
                     <Menu size={26} />
                 </div>
 
@@ -39,7 +43,7 @@ export default function Sidebar() {
             <div className="p-4 flex items-center justify-center">
                 {open && (
                     <div className="flex flex-col items-center">
-                        <img src={WhiteLogo} />
+                        <img src={WhiteLogo} alt="Logo" className="w-full" />
                     </div>
                 )}
             </div>

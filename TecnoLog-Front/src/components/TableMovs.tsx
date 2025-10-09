@@ -8,29 +8,37 @@ interface Item {
     status: string;
     partNumber: string;
     material: string;
-    categoria: string;
-    estoque: number;
-    valorEstoque: string;
+    category: string;
+    date: string;
+    quantity: number;
 }
 
 const Table: React.FC = () => {
+    const generateRandomDate = () => {
+        const start = new Date(2023, 0, 1).getTime(); 
+        const end = new Date(2025, 11, 31).getTime(); 
+        const randomTime = start + Math.random() * (end - start);
+        const randomDate = new Date(randomTime);
+        return randomDate.toLocaleDateString("pt-BR");
+    };
+
     const mockData: Item[] = Array.from({ length: 45 }, (_, i) => {
-        const statusOptions = ["Zero", "Baixo", "Ok"];
-        const status = statusOptions[i % 3];
+        const statusOptions = ["Inbound", "Outbound"];
+        const status = statusOptions[i % 2];
 
         return {
             id: i + 1,
             status,
             partNumber: `PN-${1000 + i}`,
             material: `Material ${i + 1}`,
-            categoria: i % 3 === 0 ? "MP" : "PA",
-            estoque: Math.floor(Math.random() * 200),
-            valorEstoque: `R$ ${(Math.random() * 1000).toFixed(2)}`,
+            category: i % 3 === 0 ? "MP" : "PA",
+            date: generateRandomDate(),
+            quantity: Math.floor(Math.random() * 200),
         };
     });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 12;
     const totalPages = Math.ceil(mockData.length / itemsPerPage);
 
     const currentItems = mockData.slice(
@@ -45,8 +53,8 @@ const Table: React.FC = () => {
                 columnTwo="Part Number"
                 columnThree="Material"
                 columnFour="Categoria"
-                columnFive="Estoque"
-                columnSix="Valor no Estoque"
+                columnFive="Data"
+                columnSix="Quantidade"
             />
 
             <div>
@@ -56,9 +64,9 @@ const Table: React.FC = () => {
                         columnOne={item.status}
                         columnTwo={item.partNumber}
                         columnThree={item.material}
-                        columnFour={item.categoria}
-                        columnFive={item.estoque.toString()}
-                        columnSix={item.valorEstoque}
+                        columnFour={item.category}
+                        columnFive={item.date}
+                        columnSix={item.quantity.toString()}
                     />
                 ))}
             </div>

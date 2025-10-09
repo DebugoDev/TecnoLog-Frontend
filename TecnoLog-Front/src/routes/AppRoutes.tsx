@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 import Stock from "../pages/Stock/Stock";
-import Login from "../pages/Stock/Login";
+import Login from "../pages/Login/Login";
+import Movs from "../pages/Movs/Movs";
 
 const AppRoutes: React.FC = () => {
     return (
@@ -9,6 +10,7 @@ const AppRoutes: React.FC = () => {
             <Routes>
                 <Route path="/" element={<Stock />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/movs" element={<Movs />} />
             </Routes>
         </Router>
     );

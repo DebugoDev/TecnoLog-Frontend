@@ -11,9 +11,9 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children, title, userName, userEmail }) => {
   return (
-    <div className="flex h-screen">
+    <div className="relative h-screen">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="ml-16 flex flex-col h-full transition-all duration-300">
         <Header title={title} userName={userName} userEmail={userEmail} />
         <main className="flex-1 p-6 overflow-y-auto bg-[#ededed]">
           {children}
