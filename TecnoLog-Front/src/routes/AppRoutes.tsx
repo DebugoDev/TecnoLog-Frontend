@@ -4,6 +4,7 @@ import Stock from "../pages/Stock/Stock";
 import Login from "../pages/Login/Login";
 import Movs from "../pages/Movs/Movs";
 import Users from "../pages/Users/Users";
+import Production from "../pages/Production/Production";
 
 const AppRoutes: React.FC = () => {
     return (
@@ -13,6 +14,7 @@ const AppRoutes: React.FC = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/movs" element={<Movs />} />
                 <Route path="/users" element={<Users />} />
+                <Route path="/production" element={<Production />} />
             </Routes>
         </Router>
     );

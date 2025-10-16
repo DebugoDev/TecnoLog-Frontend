@@ -6,11 +6,11 @@ export default function Sidebar() {
     const [open, setOpen] = useState(false);
 
     const menuItems = [
-        { name: "Pedidos", icon: <ShoppingCart size={22} /> },
-        { name: "Estoque", icon: <Grid size={22} /> },
-        { name: "Notificações", icon: <Bell size={22} /> },
-        { name: "Usuários", icon: <Users size={22} /> },
-        { name: "Entrada e Saída", icon: <Package size={22} /> },
+        { name: "Requisições de Produção", icon: <ShoppingCart size={22} />, link: "/production" },
+        { name: "Estoque", icon: <Grid size={22}/>, link: "/" },
+        { name: "Notificações", icon: <Bell size={22} />, link: "/not" },
+        { name: "Usuários", icon: <Users size={22} />, link: "/users" },
+        { name: "Entrada e Saída", icon: <Package size={22} />, link: "/movs" },
     ];
 
     return (
@@ -29,13 +29,14 @@ export default function Sidebar() {
 
                 <nav className="mt-4">
                     {menuItems.map((item, idx) => (
-                        <div
+                        <a
                             key={idx}
-                            className="flex items-center gap-3 px-4 py-3 hover:bg-[#22384d] cursor-pointer transition-colors"
+                            className="flex items-center text-white gap-3 px-4 py-3 hover:bg-[#22384d] cursor-pointer transition-colors"
+                            href={item.link}
                         >
                             {item.icon}
                             {open && <span className="text-base">{item.name}</span>}
-                        </div>
+                        </a>
                     ))}
                 </nav>
             </div>

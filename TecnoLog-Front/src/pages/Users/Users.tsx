@@ -4,7 +4,7 @@ import UserSearch from "../../components/UserSearch";
 import '../../App.css'
 import UsersBox from "../../components/UsersBox";
 
-const Stock: React.FC = () => {
+const Users: React.FC = () => {
   return (
     <MainLayout
       title="Usuários"
@@ -21,4 +21,4 @@ const Stock: React.FC = () => {
   );
 };
 
-export default Stock;
+export default Users;

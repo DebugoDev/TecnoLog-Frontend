@@ -1,7 +1,6 @@
 import React from "react";
 import ColorLogo from "../assets/images/logo-colorida.png"
 import InputNormal from "./InputNormal";
-import Button from "./Button";
 
 const LoginForm: React.FC = () => {
   return (
