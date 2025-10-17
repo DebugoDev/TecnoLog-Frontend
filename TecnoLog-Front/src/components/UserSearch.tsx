@@ -1,7 +1,6 @@
 import React from "react";
 import Input from "./Input";
-import { FolderOpen, Funnel } from "lucide-react";
-import ButtonFile from "./ButtonFile";
+import { FolderOpen } from "lucide-react";
 import Button from "./Button";
 
 interface SearchbarProps {

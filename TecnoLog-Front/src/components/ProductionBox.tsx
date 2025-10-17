@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import UserCard from "./UserCard";
 import Pagination from "./Pagination";
 import ProductionCard from "./ProductionCard";
 

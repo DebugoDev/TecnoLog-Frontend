@@ -1,10 +1,8 @@
 import React from "react";
 import MainLayout from "../../layouts/MainLayout";
-import UserSearch from "../../components/UserSearch";
 import '../../App.css'
 import ProductionBox from "../../components/ProductionBox";
 import ProductionBar from "../../components/ProductionBar";
-import SearchBar from "../../components/SearchBar";
 import ProductionSearch from "../../components/ProductionSearch";
 
 const Production: React.FC = () => {

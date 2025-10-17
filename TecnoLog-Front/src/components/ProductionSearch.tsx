@@ -2,7 +2,6 @@ import React from "react";
 import Input from "./Input";
 import { FolderOpen, Funnel } from "lucide-react";
 import ButtonFile from "./ButtonFile";
-import Button from "./Button";
 
 const ProductionBar: React.FC = () => {
     return (
