@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ColorLogo from "../assets/images/logo-colorida.png";
 import InputNormal from "./InputNormal";
+import authService from "../services/authService";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../services/authService";
 
 const LoginForm: React.FC = () => {
 

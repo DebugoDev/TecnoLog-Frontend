@@ -1,5 +1,14 @@
 ﻿const BASE_URL = import.meta.env.VITE_API_URL;
 
+export interface IPagination {
+    page: number
+    pageSize: number
+    totalPages: number
+    totalItems: number
+    hasPreviousPage: boolean
+    hasNextPage: boolean
+}
+
 async function request(endpoint: string, options: RequestInit = {}) {
     const token = localStorage.getItem("token");
 
@@ -20,10 +29,12 @@ async function request(endpoint: string, options: RequestInit = {}) {
     return data;
 }
 
-export const api = {
+const api = {
     get: (endpoint: string) => request(endpoint),
     post: (endpoint: string, body?: any) => request(endpoint, { method: "POST", body: JSON.stringify(body) }),
     put: (endpoint: string, body?: any) => request(endpoint, { method: "PUT", body: JSON.stringify(body) }),
     patch: (endpoint: string, body?: any) => request(endpoint, { method: "PATCH", body: JSON.stringify(body) }),
     delete: (endpoint: string) => request(endpoint, { method: "DELETE" }),
 };
+
+export default api;

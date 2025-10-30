@@ -1,12 +1,11 @@
-﻿// src/services/authService.ts
-import { api } from "./api";
+﻿import api from "./api";
 
-interface LoginRequest {
+interface ILoginRequest {
     email: string;
     password: string;
 }
 
-interface LoginResponse {
+interface ILoginResponse {
     token: string;
     user: {
         id: number;
@@ -15,8 +14,10 @@ interface LoginResponse {
     };
 }
 
-export const authService = {
-    login: async (data: LoginRequest): Promise<LoginResponse> => {
+const authService = {
+    login: async (data: ILoginRequest): Promise<ILoginResponse> => {
         return await api.post("/auth", data);
     },
 };
+
+export default authService;
