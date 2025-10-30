@@ -1,42 +1,36 @@
 import React, { useState } from "react";
 import ColorLogo from "../assets/images/logo-colorida.png";
 import InputNormal from "./InputNormal";
-import authService from "../services/authService";
-
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../hooks/useUser";
 
 const LoginForm: React.FC = () => {
-
     const navigate = useNavigate();
+    const { login } = useUser();
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
-
         e.preventDefault();
         setError("");
 
         toast.promise(
-            authService.login({ email: username, password }),
+            login(email, password),
             {
-                pending: "Logando...",
-                success: "Usuário autenticado!",
+                pending: "Autenticando...",
+                success: "Login realizado!",
                 error: {
                     render({ data }: any) {
-                        const message = data?.detail || data?.message;
-                        setError(message);
-
-                        return message;
+                        const msg = data?.detail || data?.message;
+                        setError(msg);
+                        return msg;
                     },
-                }
+                },
             }
-        ).then((res) => {
-            localStorage.setItem("token", res.token);
-            navigate("/");
-        })
+        ).then(() => navigate("/users"));
     };
 
     return (
@@ -48,8 +42,8 @@ const LoginForm: React.FC = () => {
             <InputNormal
                 label="E-mail"
                 type="email"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
             />
             <InputNormal
@@ -59,12 +53,10 @@ const LoginForm: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
             />
-
             {error && <span className="text-red-500 text-sm">{error}</span>}
-
             <button
                 type="submit"
-                className={"w-1/2 h-13  text-white rounded-[15px] border-none shadow-lg bg-[#1f3449] hover:bg-[#175476] transition-colors duration-200"}
+                className="w-1/2 h-13 text-white rounded-[15px] border-none shadow-lg bg-[#1f3449] hover:bg-[#175476] transition-colors duration-200"
             >
                 Login
             </button>
@@ -72,4 +64,4 @@ const LoginForm: React.FC = () => {
     );
 };
 
-export default LoginForm;   
+export default LoginForm;

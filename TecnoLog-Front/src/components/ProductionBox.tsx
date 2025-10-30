@@ -38,7 +38,7 @@ const ProductionBox: React.FC = () => {
                     <ProductionCard key={index} idCustomer={product.idCustomer} customer={product.customer} materialOne={product.materialOne} materialTwo={product.materialTwo} materialThree={product.materialThree} idOrder={product.idOrder} status={product.status} />
                 ))}
             </div>
-            <Pagination
+            {/* <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}
                 onPageChange={(page) => {
@@ -46,7 +46,7 @@ const ProductionBox: React.FC = () => {
                         setCurrentPage(page);
                     }
                 }}
-            />
+            /> */}
         </div>
     );
 };

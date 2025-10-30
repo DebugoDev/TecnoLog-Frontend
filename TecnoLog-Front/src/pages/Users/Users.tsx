@@ -12,8 +12,6 @@ const Users: React.FC = () => {
     return (
         <MainLayout
             title="Usuários"
-            userName="Maria Pimenta"
-            userEmail="maria.log@tecnotooling.com"
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">

@@ -1,4 +1,5 @@
 ﻿import api from "./api";
+import type { IUser } from "./userService";
 
 interface ILoginRequest {
     email: string;
@@ -7,11 +8,7 @@ interface ILoginRequest {
 
 interface ILoginResponse {
     token: string;
-    user: {
-        id: number;
-        name: string;
-        role: string;
-    };
+    user: IUser
 }
 
 const authService = {
