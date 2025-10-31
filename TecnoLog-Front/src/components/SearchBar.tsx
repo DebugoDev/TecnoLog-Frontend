@@ -31,7 +31,9 @@ const SearchBar: React.FC<SearchbarProps> = ({ title, search, setSearch }) => {
                     </a>
                 </div>
                 <div className="flex gap-2 h-12">
-                    <ButtonFile />
+                    <ButtonFile handleFileChange={function (e: React.ChangeEvent<HTMLInputElement>): Promise<void> | void {
+                        throw new Error("Function not implemented.");
+                    } } />
                     <Button title={`+ ${title}`} />
                 </div>
             </div>

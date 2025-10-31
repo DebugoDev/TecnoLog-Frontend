@@ -25,6 +25,10 @@ interface IGetPaginatedUsersResponse {
     pagination: IPagination
 }
 
+interface IImportUsersCsv {
+    importedItems: number
+}
+
 const userService = {
     getPaginated: async ({ search, page, size }: IGetPaginatedUsersRequest): Promise<IGetPaginatedUsersResponse> => {
         const params = new URLSearchParams();
@@ -34,6 +38,13 @@ const userService = {
         params.append("count", size.toString());
 
         return await api.get(`/users/paginated?${params}`);
+    },
+
+    importCsv: async (file: File): Promise<IImportUsersCsv> => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        return await api.post("/users/import", formData, { isFormData: true });
     }
 };
 

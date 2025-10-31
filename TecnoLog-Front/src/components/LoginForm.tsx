@@ -28,7 +28,7 @@ const LoginForm: React.FC = () => {
                         setError(msg);
                         return msg;
                     },
-                },
+                }
             }
         ).then(() => navigate("/users"));
     };
