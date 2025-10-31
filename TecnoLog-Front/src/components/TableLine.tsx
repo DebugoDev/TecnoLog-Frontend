@@ -14,16 +14,16 @@ const TableLine: React.FC<TableLineProps> = ({ columnOne, columnTwo, columnThree
 
     const renderStatus = () => {
         switch (columnOne) {
-            case "Zero":
-                return <p className="text-[#DA201D] font-bold text-2xl">•</p>;
-            case "Baixo":
-                return <p className="text-[#E9C71C] font-bold text-2xl">•</p>;
-            case "Ok":
-                return <p className="text-[#33C014] font-bold text-2xl">•</p>;
+            case "OUTOFSTOCK":
+                return <p className="text-[#DA201D] font-bold text-3xl">•</p>;
+            case "LOWSTOCK":
+                return <p className="text-[#E9C71C] font-bold text-3xl">•</p>;
+            case "INSTOCK":
+                return <p className="text-[#33C014] font-bold text-3xl">•</p>;
             case "Inbound":
-                return <p className="text-[#33C014] text-2xl"><ChevronUp /></p>;
+                return <p className="text-[#33C014] text-3xl"><ChevronUp /></p>;
             case "Outbound":
-                return <p className="text-[#DA201D] text-2xl"><ChevronDown /></p>;
+                return <p className="text-[#DA201D] text-3xl"><ChevronDown /></p>;
             default:
                 return <p className="text-gray-500">{columnOne}</p>;
         };
@@ -47,7 +47,7 @@ const TableLine: React.FC<TableLineProps> = ({ columnOne, columnTwo, columnThree
             <p>{columnThree}</p>
             <p>{columnFour}</p>
             <p>{columnFive}</p>
-            <p>{renderQuantity()}</p>
+            <div>{renderQuantity()}</div>
             <Trash className="cursor-pointer"/>
         </div>
     );

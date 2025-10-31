@@ -1,42 +1,18 @@
-import React, { useState } from "react";
+import React, { type Dispatch, type SetStateAction } from "react";
 import HeaderTable from "./HeaderTable";
 import TableLine from "./TableLine";
 import Pagination from "./Pagination";
+import type { IPagination } from "../services/api";
+import type { IStockItem } from "../services/stockItemService";
 
-interface Item {
-    id: number;
-    status: string;
-    partNumber: string;
-    material: string;
-    categoria: string;
-    estoque: number;
-    valorEstoque: string;
+
+interface TableProps {
+    pagination: IPagination
+    setPagination: Dispatch<SetStateAction<IPagination>>
+    paginatedItems?: IStockItem[]
 }
 
-const Table: React.FC = () => {
-    const mockData: Item[] = Array.from({ length: 45 }, (_, i) => {
-        const statusOptions = ["Zero", "Baixo", "Ok"];
-        const status = statusOptions[i % 3];
-
-        return {
-            id: i + 1,
-            status,
-            partNumber: `PN-${1000 + i}`,
-            material: `Material ${i + 1}`,
-            categoria: i % 3 === 0 ? "MP" : "PA",
-            estoque: Math.floor(Math.random() * 200),
-            valorEstoque: `R$ ${(Math.random() * 1000).toFixed(2)}`,
-        };
-    });
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const totalPages = Math.ceil(mockData.length / itemsPerPage);
-
-    const currentItems = mockData.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
+const Table: React.FC<TableProps> = ({ pagination, setPagination, paginatedItems }) => {
 
     return (
         <div className="w-full mx-auto mt-5 rounded-xl overflow-hidden ">
@@ -44,29 +20,44 @@ const Table: React.FC = () => {
                 columnOne="Status"
                 columnTwo="Part Number"
                 columnThree="Material"
-                columnFour="Categoria"
+                columnFour="Grupo"
                 columnFive="Estoque"
                 columnSix="Valor no Estoque"
             />
 
             <div>
-                {currentItems.map((item) => (
+                {paginatedItems?.map((item) => (
                     <TableLine
                         key={item.id}
                         columnOne={item.status}
-                        columnTwo={item.partNumber}
-                        columnThree={item.material}
-                        columnFour={item.categoria}
-                        columnFive={item.estoque.toString()}
-                        columnSix={item.valorEstoque}
+                        columnTwo={item.code}
+                        columnThree={item.description}
+                        columnFour={(() => {
+                            switch (item.stockGroup) {
+                                case "CONSUMPTION":
+                                    return "Consumo";
+                                case "DIRECT":
+                                    return "Diretos";
+                                case "INDIRECT":
+                                    return "Indiretos";
+                                default:
+                                    return "-";
+                            }
+                        })()}
+                        columnFive={!item.currentStock ? "-" : `${item.currentStock} ${item.unitOfMeasurement}`}
+                        columnSix={
+                            item.stockValue.toLocaleString('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                            })
+                        }
                     />
                 ))}
             </div>
 
             <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={setCurrentPage}
+                pagination={pagination}
+                onPageChange={(page) => setPagination({ ...pagination, page })}
             />
         </div>
     );

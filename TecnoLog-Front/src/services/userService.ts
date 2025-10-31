@@ -1,11 +1,5 @@
 ﻿import api, { type IPagination } from "./api";
 
-interface IGetPaginatedRequest {
-    search: string
-    page: number
-    size: number
-}
-
 export interface IUser {
     code: number
     name: string
@@ -20,13 +14,19 @@ export interface IUser {
     createdAt: Date
 }
 
-interface IGetPaginatedResponse {
+interface IGetPaginatedUsersRequest {
+    search: string
+    page: number
+    size: number
+}
+
+interface IGetPaginatedUsersResponse {
     paginatedItems: IUser[]
     pagination: IPagination
 }
 
 const userService = {
-    getPaginated: async ({ search, page, size }: IGetPaginatedRequest): Promise<IGetPaginatedResponse> => {
+    getPaginated: async ({ search, page, size }: IGetPaginatedUsersRequest): Promise<IGetPaginatedUsersResponse> => {
         const params = new URLSearchParams();
 
         params.append("query", search);

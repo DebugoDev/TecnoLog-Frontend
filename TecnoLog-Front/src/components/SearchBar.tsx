@@ -1,18 +1,23 @@
-import React from "react";
+import React, { type Dispatch, type SetStateAction } from "react";
 import Input from "./Input";
-import { FolderOpen, Funnel } from "lucide-react";
 import ButtonFile from "./ButtonFile";
 import Button from "./Button";
+import { FolderOpen, Funnel } from "lucide-react";
 
 interface SearchbarProps {
-    title: string;
+    title: string
+    search: string
+    setSearch: Dispatch<SetStateAction<string>>
 }
 
-const SearchBar: React.FC<SearchbarProps> = ({ title }) => {
+const SearchBar: React.FC<SearchbarProps> = ({ title, search, setSearch }) => {
     return (
         <div className="w-auto bg-[#f8f9fa] h-22 rounded-2xl flex items-center justify-between p-4 z-20">
             <div className="w-1/2 flex items-center gap-10">
-                <Input placeholder="Item" />
+                <Input
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    label="Pesquisa" />
                 <a className="flex gap-2 text-[#1f3449] hover:text-[#175476] transition-colors duration-200 cursor-pointer">
                     <Funnel />
                     Filtros

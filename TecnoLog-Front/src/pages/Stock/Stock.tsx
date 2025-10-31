@@ -1,26 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import SearchBar from "../../components/SearchBar";
-import '../../App.css'
 import ValuesBar from "../../components/ValuesBar";
 import Table from "../../components/Table";
 
+import '../../App.css'
+import type { IStockItem, IStockOverview } from "../../services/stockItemService";
+import stockItemService from "../../services/stockItemService";
+import type { IPagination } from "../../services/api";
+
 const Stock: React.FC = () => {
+
+    const [search, setSearch] = useState("");
+
+    const [pagination, setPagination] = useState<IPagination>({
+        page: 1,
+        pageSize: 15,
+        totalPages: 1,
+        totalItems: 0,
+        hasPreviousPage: false,
+        hasNextPage: false
+    });
+
+    const [data, setData] = useState<IStockItem[]>();
+    const [overview, setOverview] = useState<IStockOverview>();
+    
+    const handleUsers = async () => {
+
+        
+        const response = await stockItemService.getPaginated({
+            search, page: pagination.page, size: pagination.pageSize
+        });
+        
+        setOverview(response.overview);
+        setData(response.paginatedItems);
+        setPagination(response.pagination);
+    }
+
+    useEffect(() => {
+        setPagination({ ...pagination, page: 1 })
+    }, [search])
+
+    useEffect(() => {
+        handleUsers();
+    }, [pagination.page, search])
+
     return (
         <MainLayout
             title="Estoque"
-            userName="Maria Pimenta"
-            userEmail="maria.log@tecnotooling.com"
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                    <SearchBar title="Produto" />
+                    <SearchBar search={search} setSearch={setSearch} title="Produto" />
                 </div>
                 <div className="rounded-2xl shadow-md -mt-4">
-                    <ValuesBar stockValue="112.290,00" lowStock="3" zeroStock="2" />
+                    <ValuesBar overview={overview} />
                 </div>
             </div>
-            <Table />
+            <Table pagination={pagination} setPagination={setPagination} paginatedItems={data} />
         </MainLayout>
     );
 };
