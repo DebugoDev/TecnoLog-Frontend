@@ -10,7 +10,7 @@ interface ProductionCardProps {
     status: string,
 }
 
-const ProductionCard: React.FC<ProductionCardProps> = ({ idCustomer, customer, materialOne, materialTwo, materialThree, idOrder, status }) => {
+const ProductionCard: React.FC<ProductionCardProps> = ({ idCustomer, customer, materialOne, materialTwo, materialThree, idOrder, status, }) => {
 
         const renderStatus = () => {
         switch (status) {
