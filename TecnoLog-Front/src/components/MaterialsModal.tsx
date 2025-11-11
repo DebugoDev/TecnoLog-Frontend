@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Upload, FileDown, X } from "lucide-react";
 
 interface Material {
@@ -29,12 +29,26 @@ const MaterialsModal: React.FC<MaterialsModalProps> = ({
     onClose,
 }) => {
     const [activeTab, setActiveTab] = useState<"dados" | "materiais">("materiais");
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => setVisible(true), 10);
+        return () => clearTimeout(timeout);
+    }, []);
+
+    const handleClose = () => {
+        setVisible(false);
+        setTimeout(() => onClose(), 200);
+    };
 
     return (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-            <div className="bg-[#f8f9fa] rounded-2xl shadow-xl w-[650px] max-h-[80vh] overflow-y-auto p-6 relative">
+        <div className={`fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm transition-all duration-200 ${visible ? "bg-black/40" : "bg-black/0 pointer-events-none"}`}>
+            <div
+                className={`bg-[#f8f9fa] rounded-2xl shadow-xl w-[650px] max-h-[80vh] overflow-y-auto p-6 relative transform transition-all duration-200 ease-in-out ${visible ? "scale-100 opacity-100" : "scale-95 opacity-0"
+                    }`}
+            >
                 <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition cursor-pointer"
                 >
                     <X className="w-5 h-5" />
