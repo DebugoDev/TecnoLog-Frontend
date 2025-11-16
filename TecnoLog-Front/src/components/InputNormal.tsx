@@ -28,7 +28,7 @@ const InputNormal: React.FC<InputProps> = ({ label, ...props }) => {
                     className={`absolute left-5 transition-all duration-200 bg-[#f8f9fa] px-1
                     ${focused || hasValue ? "-top-3 text-sm text-[#175476]" : "top-2.5 text-md text-[#1f3449]"}`}
                 >
-                    {label}
+                    {`${label} ${props.required ? "*" : ""}`}
                 </span>
             </label>
         </div>

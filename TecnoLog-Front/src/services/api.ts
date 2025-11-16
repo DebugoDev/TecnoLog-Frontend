@@ -30,13 +30,20 @@ async function request(endpoint: string, options: RequestOptions = {}) {
         };
 
     const response = await fetch(`${BASE_URL}${endpoint}`, { ...options, headers });
-    const data = await response.json();
+    let data;
+
+    try {
+        data = await response.json();
+    } catch {
+        throw { status: 500, message: "Erro desconhecido" };
+    }
 
     if (!response.ok) {
         throw { status: response.status, ...data };
     }
 
     return data;
+
 }
 
 const api = {
