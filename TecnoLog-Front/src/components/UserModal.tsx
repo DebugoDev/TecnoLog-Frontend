@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import InputNormal from "./InputNormal";
-import DepartmentSelect from "./DepartamentSelect";
+import DepartmentSelect from "./DepartmentSelect";
 import RoleSelect from "./RoleSelect";
 import Button from "./Button";
 
