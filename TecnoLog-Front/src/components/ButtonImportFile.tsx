@@ -1,11 +1,11 @@
-import { Download } from "lucide-react";
+import { Download, Upload } from "lucide-react";
 import React, { useRef } from "react";
 
-interface IButtonFileProps {
+interface IButtonImportFileProps {
     handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void> | void;
 }
 
-const ButtonFile: React.FC<IButtonFileProps> = ({ handleFileChange }) => {
+const ButtonImportFile: React.FC<IButtonImportFileProps> = ({ handleFileChange }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleButtonClick = () => fileInputRef.current?.click();
@@ -23,10 +23,10 @@ const ButtonFile: React.FC<IButtonFileProps> = ({ handleFileChange }) => {
                 onClick={handleButtonClick}
                 className="px-2 py-2 bg-[#1f3449] text-white rounded-lg hover:bg-[#175476] transition-colors duration-200 border-none shadow-lg"
             >
-                <Download size={18} />
+                <Upload size={18} />
             </button>
         </>
     );
 };
 
-export default ButtonFile;
+export default ButtonImportFile;

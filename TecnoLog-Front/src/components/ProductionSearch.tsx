@@ -1,7 +1,7 @@
 import React from "react";
 import Input from "./Input";
 import { FolderOpen, Funnel } from "lucide-react";
-import ButtonFile from "./ButtonFile";
+import ButtonImportFile from "./ButtonImportFile";
 
 const ProductionBar: React.FC = () => {
     return (
@@ -21,7 +21,7 @@ const ProductionBar: React.FC = () => {
                     </a>
                 </div>
                 <div className="flex h-12">
-                    <ButtonFile />
+                    <ButtonImportFile />
                 </div>
             </div>
         </div>

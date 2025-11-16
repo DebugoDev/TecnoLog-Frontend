@@ -41,14 +41,27 @@ const TableLine: React.FC<TableLineProps> = ({ columnOne, columnTwo, columnThree
     };
 
     return (
-        <div className="grid grid-cols-[200px_300px_500px_250px_200px_250px_50px] items-center h-12 font-medium border-b border-[#d6d6d6]">
-            <div className="flex items-center pl-2">{renderStatus()}</div>
-            <p>{columnTwo}</p>
-            <p>{columnThree}</p>
-            <p>{columnFour}</p>
-            <p>{columnFive}</p>
-            <div>{renderQuantity()}</div>
-            <Trash className="cursor-pointer"/>
+        <div className="w-full">
+            <div
+                className="
+                    grid
+                    grid-cols-[100px_200px_minmax(500px,1fr)_200px_250px_250px_50px]
+                    items-center
+                    h-12
+                    font-medium
+                    border-b
+                    border-[#d6d6d6]
+                    min-w-[1200px]
+                "
+            >
+                <div className="flex items-center pl-2">{renderStatus()}</div>
+                <p>{columnTwo}</p>
+                <p className="truncate">{columnThree}</p>
+                <p>{columnFour}</p>
+                <p>{columnFive}</p>
+                <div>{renderQuantity()}</div>
+                <Trash className="cursor-pointer" />
+            </div>
         </div>
     );
 };

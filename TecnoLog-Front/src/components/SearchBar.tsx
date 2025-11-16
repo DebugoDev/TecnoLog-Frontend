@@ -1,6 +1,6 @@
 import React, { type Dispatch, type SetStateAction } from "react";
 import Input from "./Input";
-import ButtonFile from "./ButtonFile";
+import ButtonImportFile from "./ButtonImportFile";
 import Button from "./Button";
 import { FolderOpen, Funnel } from "lucide-react";
 
@@ -31,7 +31,7 @@ const SearchBar: React.FC<SearchbarProps> = ({ title, search, setSearch }) => {
                     </a>
                 </div>
                 <div className="flex gap-2 h-12">
-                    <ButtonFile handleFileChange={function (e: React.ChangeEvent<HTMLInputElement>): Promise<void> | void {
+                    <ButtonImportFile handleFileChange={function (e: React.ChangeEvent<HTMLInputElement>): Promise<void> | void {
                         throw new Error("Function not implemented.");
                     } } />
                     <Button title={`+ ${title}`} />

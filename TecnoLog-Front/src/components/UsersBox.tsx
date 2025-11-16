@@ -43,7 +43,7 @@ const UsersBox: React.FC<UsersBoxProps> = ({ search }) => {
 
     return (
         <div className="flex flex-col w-full items-center justify-center h-full">
-            <div className="grid grid-cols-4 gap-6 p-6 w-full ">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-6 p-6 w-full ">
                 {data?.map((user, index) => (
                     <UserCard
                         key={index}

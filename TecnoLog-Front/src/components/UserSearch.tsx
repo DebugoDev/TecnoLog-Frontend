@@ -3,9 +3,10 @@ import Input from "./Input";
 import Button from "./Button";
 
 import { FolderOpen } from "lucide-react";
-import ButtonFile from "./ButtonFile";
+import ButtonImportFile from "./ButtonImportFile";
 import { toast } from "react-toastify";
 import userService from "../services/userService";
+import ButtonExportFile from "./ButtonExportFile";
 
 interface SearchbarProps {
     title: string;
@@ -63,7 +64,8 @@ const SearchBar: React.FC<SearchbarProps> = ({ title, search, setSearch }) => {
                     </a>
                 </div>
                 <div className="flex gap-2 h-12">
-                    <ButtonFile handleFileChange={handleFileChange} />
+                    <ButtonExportFile handleFileChange={handleFileChange} />
+                    <ButtonImportFile handleFileChange={handleFileChange} />
                     <Button title={`+ ${title}`} />
                 </div>
             </div>
