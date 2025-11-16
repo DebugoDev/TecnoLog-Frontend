@@ -6,6 +6,7 @@ import { FolderOpen, FolderUp, Funnel } from "lucide-react";
 import ButtonIcon from "./ButtonExportFile";
 import UserModal from "./UserModal";
 import { toast } from "react-toastify";
+import stockItemService from "../services/stockItemService";
 
 interface SearchBarProps {
     title: string
@@ -13,9 +14,10 @@ interface SearchBarProps {
     search: string
     setSearch: Dispatch<SetStateAction<string>>
     csvImportService: (file: File) => Promise<any>
+    csvExportService: () => Promise<void>
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch, csvImportService }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch, csvImportService, csvExportService }) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -68,7 +70,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch
                         </a>
                     </div>
                     <div className="flex gap-2 h-12">
-                        <ButtonIcon icon={FolderUp} tooltip="Exportar CSV" />
+                        <ButtonIcon icon={FolderUp} tooltip="Exportar CSV" onClick={csvExportService} />
                         <ButtonImportFile handleFileChange={handleFileChange} />
                         <Button title={`+ ${title}`} onClick={() => setShowModal(true)} />
                     </div>

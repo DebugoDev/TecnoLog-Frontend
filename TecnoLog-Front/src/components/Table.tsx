@@ -47,10 +47,10 @@ const Table: React.FC<TableProps> = ({ pagination, setPagination, paginatedItems
                             })()}
                             columnFive={!item.currentStock ? "-" : `${item.currentStock} ${item.unitOfMeasurement}`}
                             columnSix={
-                                item.stockValue.toLocaleString('pt-BR', {
+                                item.stockValue?.toLocaleString('pt-BR', {
                                     style: 'currency',
                                     currency: 'BRL',
-                                })
+                                }) ?? "-"
                             }
                         />
                     ))}

@@ -32,6 +32,10 @@ interface IGetPaginatedStockItemsResponse {
     pagination: IPagination
 }
 
+interface IImportStockItemsCsv {
+    importedItems: number
+}
+
 const stockItemService = {
     getPaginated: async ({ search, page, size }: IGetPaginatedStockItemsRequest): Promise<IGetPaginatedStockItemsResponse> => {
         const params = new URLSearchParams();
@@ -40,7 +44,18 @@ const stockItemService = {
         params.append("page", page.toString());
         params.append("count", size.toString());
 
-        return await api.get(`/stockItems/paginated?${params}`);
+        return await api.get(`/stock-items/paginated?${params}`);
+    },
+
+    importCsv: async (file: File): Promise<IImportStockItemsCsv> => {
+        const formData = new FormData();
+        formData.append("file", file);
+
+        return await api.post("/stock-items/import", formData, { isFormData: true });
+    },
+
+    exportCsv: async () => {
+        await api.downloadCsv("/stock-items/export");
     }
 }
 

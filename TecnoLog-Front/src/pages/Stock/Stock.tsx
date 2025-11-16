@@ -24,14 +24,12 @@ const Stock: React.FC = () => {
 
     const [data, setData] = useState<IStockItem[]>();
     const [overview, setOverview] = useState<IStockOverview>();
-    
-    const handleUsers = async () => {
 
-        
+    const handleStock = async () => {
         const response = await stockItemService.getPaginated({
             search, page: pagination.page, size: pagination.pageSize
         });
-        
+
         setOverview(response.overview);
         setData(response.paginatedItems);
         setPagination(response.pagination);
@@ -42,7 +40,7 @@ const Stock: React.FC = () => {
     }, [search])
 
     useEffect(() => {
-        handleUsers();
+        handleStock();
     }, [pagination.page, search])
 
     return (
@@ -51,7 +49,7 @@ const Stock: React.FC = () => {
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                    <SearchBar search={search} setSearch={setSearch} title="Produto" />
+                    <SearchBar title={"Produto"} objects={"produtos"} search={search} setSearch={setSearch} csvImportService={stockItemService.importCsv} csvExportService={stockItemService.exportCsv} />
                 </div>
                 <div className="rounded-2xl shadow-md -mt-4">
                     <ValuesBar overview={overview} />
