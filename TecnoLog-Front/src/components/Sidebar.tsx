@@ -52,8 +52,8 @@ export default function Sidebar() {
     return (
         <div
             className={`fixed top-0 left-0 h-screen bg-[#1f3449] text-white flex flex-col justify-between
-      transition-all duration-300 ease-in-out z-50
-      ${open ? "w-72" : "w-16"}`}
+                transition-all duration-300 ease-in-out z-30
+                ${open ? "w-72" : "w-16"}`}
         >
             <div className="relative">
                 <div

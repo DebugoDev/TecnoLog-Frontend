@@ -9,7 +9,7 @@ const InputNormal: React.FC<InputProps> = ({ label, ...props }) => {
     const hasValue = !!props.value && props.value.toString().length > 0;
 
     return (
-        <div className="flex justify-center items-center w-4/5">
+        <div className="flex justify-center items-center w-full">
             <label className="relative w-full">
                 <input
                     {...props}

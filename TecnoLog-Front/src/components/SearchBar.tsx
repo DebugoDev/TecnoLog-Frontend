@@ -2,11 +2,10 @@ import React, { useState, type Dispatch, type SetStateAction } from "react";
 import Input from "./Input";
 import ButtonImportFile from "./ButtonImportFile";
 import Button from "./Button";
-import { FolderOpen, FolderUp, Funnel } from "lucide-react";
+import { FolderOpen, FolderUp } from "lucide-react";
 import ButtonIcon from "./ButtonExportFile";
-import UserModal from "./UserModal";
 import { toast } from "react-toastify";
-import stockItemService from "../services/stockItemService";
+import UserModal from "./UserModal";
 
 interface SearchBarProps {
     title: string
@@ -15,9 +14,10 @@ interface SearchBarProps {
     setSearch: Dispatch<SetStateAction<string>>
     csvImportService: (file: File) => Promise<any>
     csvExportService: () => Promise<void>
+    ModalComponent: React.FC<{ onClose: () => void }>;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch, csvImportService, csvExportService }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch, csvImportService, csvExportService, ModalComponent }) => {
 
     const [showModal, setShowModal] = useState(false);
 
@@ -55,7 +55,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch
 
     return (
         <>
-            <div className="w-auto bg-[#f8f9fa] h-22 rounded-2xl flex items-center justify-between p-4 z-20">
+            <div className="w-auto bg-[#f8f9fa] h-22 rounded-2xl flex items-center justify-between p-4">
                 <div className="w-1/2 flex items-center gap-10">
                     <Input
                         value={search}
@@ -77,7 +77,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch
                 </div>
             </div>
 
-            {showModal && <UserModal onClose={() => setShowModal(false)} />}
+            {showModal && <ModalComponent onClose={() => setShowModal(false)} />}
         </>
     );
 };

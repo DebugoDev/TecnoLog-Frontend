@@ -6,6 +6,7 @@ import userService from "../../services/userService";
 import SearchBar from "../../components/SearchBar";
 
 import '../../App.css'
+import UserModal from "../../components/UserModal";
 
 const Users: React.FC = () => {
 
@@ -17,7 +18,14 @@ const Users: React.FC = () => {
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                   <SearchBar title="Usuários" objects="usuários" search={search} setSearch={setSearch} csvImportService={userService.importCsv} />
+                    <SearchBar
+                        title="Usuários"
+                        objects="usuários"
+                        search={search}
+                        setSearch={setSearch}
+                        csvImportService={userService.importCsv}
+                        csvExportService={userService.exportCsv}
+                        ModalComponent={UserModal} />
                 </div>
                 <UsersBox search={search} />
             </div>
