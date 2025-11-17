@@ -1,8 +1,8 @@
 import React from "react";
 import MainLayout from "../../layouts/MainLayout";
-import SearchBar from "../../components/SearchBar";
 import '../../App.css'
 import TableMovs from "../../components/TableMovs";
+import MovBar from "../../components/MovBar";
 
 const Stock: React.FC = () => {
   return (
@@ -13,7 +13,7 @@ const Stock: React.FC = () => {
     >
       <div className="flex flex-col space-y-0">
         <div className="rounded-2xl shadow-md z-20">
-          <SearchBar title="Movimentação" />
+          <MovBar title="Movimentação" />
         </div>
       </div>
       <TableMovs />
