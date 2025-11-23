@@ -30,6 +30,10 @@ interface IImportUsersCsv {
     importedItems: number
 }
 
+interface ICompleteUserRegistration {
+    userPassword: string
+}
+
 const userService = {
     getPaginated: async ({ search, page, size }: IGetPaginatedUsersRequest): Promise<IGetPaginatedUsersResponse> => {
         const params = new URLSearchParams();
@@ -54,6 +58,20 @@ const userService = {
 
     exportCsv: async () => {
         await api.downloadCsv("/users/export");
+    },
+
+    getRegisteringUser: async (token: string): Promise<IUser> => {
+        const params = new URLSearchParams();
+        params.append("token", token);
+
+        return await api.get(`/users/register?${params}`);
+    },
+
+    CompleteUserRegistration: async (token: string, data: ICompleteUserRegistration): Promise<IUser> => {
+        const params = new URLSearchParams();
+        params.append("token", token);
+
+        return await api.post(`/users/complete-register?${params}`, data);
     }
 };
 

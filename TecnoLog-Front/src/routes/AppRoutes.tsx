@@ -6,11 +6,13 @@ import Movs from "../pages/Movs/Movs";
 import Users from "../pages/Users/Users";
 import Production from "../pages/Production/Production";
 import ProtectedRoute from "../components/ProtectedRoute";
+import Register from "../pages/Register/Register";
 
 const AppRoutes: React.FC = () => {
     return (
         <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/complete-registration" element={<Register />} />
 
             <Route
                 path="/"

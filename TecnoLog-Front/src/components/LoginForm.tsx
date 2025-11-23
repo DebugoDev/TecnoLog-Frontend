@@ -36,7 +36,7 @@ const LoginForm: React.FC = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="bg-[#F8F9FA] w-lg min-w-1/4 h-4/7 flex flex-col gap-7 items-center justify-center rounded-br-[20px] rounded-bl-[100px] rounded-tl-[20px] rounded-tr-[100px] shadow-xl m-5"
+            className="bg-[#F8F9FA] w-lg p-10 min-w-1/4 h-4/7 flex flex-col gap-7 items-center justify-center rounded-br-[20px] rounded-bl-[100px] rounded-tl-[20px] rounded-tr-[100px] shadow-xl m-5"
         >
             <img src={ColorLogo} alt="Logo" className="w-2/3 mb-5" />
             <InputNormal
