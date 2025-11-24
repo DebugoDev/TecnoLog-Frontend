@@ -21,7 +21,7 @@ const InputNormal: React.FC<InputProps> = ({ label, ...props }) => {
                         setFocused(false);
                         props.onBlur?.(e);
                     }}
-                    className={`peer h-12 w-full px-5 text-md border-1 bg-[#f8f9fa] rounded-2xl outline-none
+                    className={`peer h-12 w-full px-5 border-1 bg-[#f8f9fa] rounded-2xl outline-none
                     ${props.disabled ? "brightness-90 cursor-not-allowed" : ""}`}
                 />
                 <span

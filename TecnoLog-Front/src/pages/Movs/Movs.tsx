@@ -8,12 +8,16 @@ const Stock: React.FC = () => {
     return (
         <MainLayout
             title="Entrada e Saída"
-            userName="Maria Pimenta"
-            userEmail="maria.log@tecnotooling.com"
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                    <SearchBar title="Movimentação" />
+                    <SearchBar title="Movimentação" objects={""} search={""} setSearch={function (value: React.SetStateAction<string>): void {
+                        throw new Error("Function not implemented.");
+                    }} csvImportService={function (file: File): Promise<any> {
+                        throw new Error("Function not implemented.");
+                    }} csvExportService={function (): Promise<void> {
+                        throw new Error("Function not implemented.");
+                    }} ModalComponent={undefined} />
                 </div>
             </div>
             <TableMovs />

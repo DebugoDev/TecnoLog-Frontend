@@ -35,7 +35,7 @@ async function request(endpoint: string, options: RequestOptions = {}) {
     try {
         data = await response.json();
     } catch {
-        throw { status: 500, message: "Erro desconhecido" };
+        if (!response.ok) throw { status: 500, message: "Erro desconhecido" };
     }
 
     if (!response.ok) {

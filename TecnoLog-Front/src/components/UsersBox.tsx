@@ -3,6 +3,7 @@ import UserCard from "./UserCard";
 import Pagination from "./Pagination";
 import userService, { type IUser } from "../services/userService";
 import type { IPagination } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 interface UsersBoxProps {
     search: string
@@ -19,18 +20,20 @@ const UsersBox: React.FC<UsersBoxProps> = ({ search }) => {
         hasNextPage: false
     });
 
+    const navigate = useNavigate();
     const [data, setData] = useState<IUser[]>();
 
     const handleUsers = async () => {
+        try {
+            const response = await userService.getPaginated({
+                search, page: pagination.page, size: pagination.pageSize
+            });
 
-        console.log(pagination.pageSize)
-
-        const response = await userService.getPaginated({
-            search, page: pagination.page, size: pagination.pageSize
-        });
-
-        setData(response.paginatedItems);
-        setPagination(response.pagination);
+            setData(response.paginatedItems);
+            setPagination(response.pagination);
+        } catch (error: any) {
+            navigate("/");
+        }
     }
 
     useEffect(() => {

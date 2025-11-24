@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
                     },
                 }
             }
-        ).then(() => navigate("/users"));
+        ).then(() => navigate("/"));
     };
 
     return (

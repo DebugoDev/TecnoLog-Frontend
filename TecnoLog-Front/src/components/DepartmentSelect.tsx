@@ -4,7 +4,7 @@ import userDepartmentService from "../services/userDepartmentService";
 
 interface IDepartmentSelectProps {
     department?: string
-    setDepartment: React.Dispatch<React.SetStateAction<string>>
+    setDepartment: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
 const RoleSelect: React.FC<IDepartmentSelectProps> = ({ department, setDepartment }) => {
@@ -33,9 +33,8 @@ const RoleSelect: React.FC<IDepartmentSelectProps> = ({ department, setDepartmen
             options={options}
             onChangeValue={(opt) => {
                 setSelected(opt);
-                setDepartment(opt?.value ?? "");
+                setDepartment(opt?.value);
             }}
-            required
         />
     );
 };

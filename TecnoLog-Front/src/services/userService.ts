@@ -30,8 +30,29 @@ interface IImportUsersCsv {
     importedItems: number
 }
 
+interface IRegisterNewUser {
+    userId: string
+    userRole: "ADMIN" | "MANAGER" | "USER"
+}
+
 interface ICompleteUserRegistration {
     userPassword: string
+}
+
+interface ICreateUser {
+    code: number
+    name: string
+    email?: string
+    userDepartmentId?: string
+}
+
+interface IUpdateUser {
+    code?: number
+    name?: string
+    email?: string
+    password?: string
+    userDepartmentId?: string
+    userRole?: "ADMIN" | "MANAGER" | "USER" | "DATA"
 }
 
 const userService = {
@@ -60,6 +81,10 @@ const userService = {
         await api.downloadCsv("/users/export");
     },
 
+    registerNewUser: async (data: IRegisterNewUser) => {
+        return await api.post("/users/register", data);
+    },
+
     getRegisteringUser: async (token: string): Promise<IUser> => {
         const params = new URLSearchParams();
         params.append("token", token);
@@ -67,11 +92,22 @@ const userService = {
         return await api.get(`/users/register?${params}`);
     },
 
-    CompleteUserRegistration: async (token: string, data: ICompleteUserRegistration): Promise<IUser> => {
+    completeUserRegistration: async (token: string, data: ICompleteUserRegistration): Promise<IUser> => {
         const params = new URLSearchParams();
         params.append("token", token);
 
         return await api.post(`/users/complete-register?${params}`, data);
+    },
+
+    createUser: async (data: ICreateUser) => {
+        return await api.post("/users", data);
+    },
+
+    updateUser: async (data: IUpdateUser, id?: string) => {
+        const params = new URLSearchParams();
+        if (id) params.append("userId", id);
+
+        return await api.patch(`/users?${params}`, data);
     }
 };
 

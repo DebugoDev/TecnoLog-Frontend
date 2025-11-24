@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import InputNormal from "./InputNormal";
 import DepartmentSelect from "./DepartmentSelect";
-import RoleSelect from "./RoleSelect";
+import { toast } from "react-toastify";
+import userService from "../services/userService";
 
 interface UserModalProps {
     onClose: () => void;
@@ -10,11 +11,27 @@ interface UserModalProps {
 
 const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
 
-    const [department, setDepartment] = useState("");
-    const [role, setRole] = useState("DATA");
+    const [code, setCode] = useState(0);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState<string>();
+    const [department, setDepartment] = useState<string>();
 
     async function handleSubmit() {
-        console.log("Código salvo!");
+        toast.promise(
+            userService.createUser({
+                code, name, email, userDepartmentId: department
+            }),
+            {
+                pending: "Criando usuário...",
+                success: `${name} criado!`,
+                error: {
+                    render({ data }: any) {
+                        const msg = data?.detail || data?.message;
+                        return msg;
+                    },
+                }
+            }
+        ).then(onClose);
     }
 
     return (
@@ -23,12 +40,17 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
             onClose={onClose}
             onSubmit={handleSubmit}
         >
-            <InputNormal label="Código" required />
-            <InputNormal label="Nome" required />
-            <InputNormal label="Email" />
-
+            <InputNormal
+                label="Código"
+                value={code}
+                type="number"
+                min={0}
+                onChange={(e) => setCode(Number(e.target.value))}
+                required
+            />
+            <InputNormal label="Nome" value={name} onChange={(e) => setName(e.target.value)} required />
+            <InputNormal label="Email" value={email} type="email" onChange={(e) => setEmail(e.target.value)} />
             <DepartmentSelect department={department} setDepartment={setDepartment} />
-            <RoleSelect role={role} setRole={setRole} />
         </Modal>
     );
 };

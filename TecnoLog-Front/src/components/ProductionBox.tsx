@@ -49,6 +49,7 @@ const ProductionBox: React.FC = () => {
                     />
                 ))}
             </div>
+
             {/* <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}

@@ -28,7 +28,7 @@ const RegisterForm: React.FC = () => {
         }
 
         toast.promise(
-            userService.CompleteUserRegistration(token, { userPassword: password }),
+            userService.completeUserRegistration(token, { userPassword: password }),
             {
                 pending: "Registrando...",
                 success: "Usuário cadastrado!",
@@ -43,7 +43,7 @@ const RegisterForm: React.FC = () => {
     };
 
     const handleUser = async () => {
-        if (!token) return;
+        if (!token) return navigate("/login");
 
         const response = await userService.getRegisteringUser(token);
         setUser(response);
