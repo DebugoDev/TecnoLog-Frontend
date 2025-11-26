@@ -45,3 +45,29 @@
     border-width: 1px;
     height: 3rem;
 }
+
+
+
+::-webkit-scrollbar {
+    width: 10px;  
+    height: 10px; 
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1f3449;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #175476; 
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1f3449 transparent;
+}
