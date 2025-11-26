@@ -1,24 +1,22 @@
 import React from "react";
-import Select, { type SingleValue, type StylesConfig } from "react-select";
+import Select, { type Props as SelectProps, type StylesConfig } from "react-select";
 
-interface OptionType {
-    value: string;
-    label: string;
+export interface IOptions {
+    values: IOptionType[]
 }
 
-interface DepartamentoSelectProps {
-    departamento: string;
-    setDepartamento: React.Dispatch<React.SetStateAction<string>>;
+export interface IOptionType {
+    value: string
+    label: string
 }
 
-const options: OptionType[] = [
-    { value: "make", label: "subgrupo 1" },
-    { value: "deliver", label: "subgrupo 12" },
-    { value: "source", label: "subgrupo 13" },
-    { value: "quality", label: "subgrupo 14" },
-];
+export interface IOptionSelectProps extends Omit<SelectProps<IOptionType, false>, "value" | "onChange"> {
+    label: string
+    value: IOptionType | null
+    onChangeValue: (value: IOptionType | null) => void
+}
 
-const customStyles: StylesConfig<OptionType, false> = {
+export const customStyles: StylesConfig<IOptionType, false> = {
     control: (base, state) => ({
         ...base,
         backgroundColor: "#f8f9fa",
@@ -39,8 +37,8 @@ const customStyles: StylesConfig<OptionType, false> = {
         backgroundColor: state.isSelected
             ? "#175476"
             : state.isFocused
-            ? "#e8eef3"
-            : "#ffffff",
+                ? "#e8eef3"
+                : "#ffffff",
         color: state.isSelected ? "#ffffff" : "#1f3449",
         cursor: "pointer",
         padding: "10px 15px",
@@ -71,28 +69,31 @@ const customStyles: StylesConfig<OptionType, false> = {
         marginTop: 6,
         overflow: "hidden",
     }),
+    menuPortal: (base) => ({
+        ...base,
+        zIndex: 100
+    }),
 };
 
-const SubGroupSelect: React.FC<DepartamentoSelectProps> = ({
-    departamento,
-    setDepartamento,
-}) => {
-    const handleChange = (selected: SingleValue<OptionType>) => {
-        setDepartamento(selected ? selected.value : "");
-    };
-
+const OptionSelect: React.FC<IOptionSelectProps> = ({ label, value, onChangeValue, options, ...rest }) => {
     return (
         <div className="w-full">
             <Select
+                {...rest}
                 options={options}
                 styles={customStyles}
-                placeholder="Sub-Grupo de Estoque"
-                value={options.find((opt) => opt.value === departamento) || null}
-                onChange={handleChange}
+                value={value}
+                onChange={(selected) => onChangeValue(selected ?? null)}
+                placeholder={`${label} ${rest.required ? "*" : ""}`}
                 isSearchable={false}
+                menuPortalTarget={document.body}
+                menuPosition="fixed"
+                isClearable={rest.isClearable ?? !rest.required}
             />
+
         </div>
     );
 };
 
-export default SubGroupSelect;
+
+export default OptionSelect;

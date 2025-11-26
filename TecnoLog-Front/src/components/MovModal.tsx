@@ -1,65 +1,104 @@
 import React, { useEffect, useState } from "react";
-import { X } from "lucide-react";
 import InputNormal from "./InputNormal";
 import MovSelect from "./MovSelect";
+import Modal from "./Modal";
+import StockItemSelect from "./StockItemSelect";
+import type { IStockItem } from "../services/stockItemService";
+import TextareaNormal from "./TextareaNormal";
 
 interface MovModalProps {
     onClose: () => void;
 }
 
 const MovModal: React.FC<MovModalProps> = ({ onClose }) => {
-    const [visible, setVisible] = useState(false);
-    const [mov, setMov] = useState("");
+    const [stockItem, setStockItem] = useState<IStockItem>();
+    const [mov, setMov] = useState<string>();
+    const [quantity, setQuantity] = useState<number>(0);
+    const [error, setError] = useState<string>("");
 
+    // Recalcula o erro sempre que quantity, mov ou stockItem mudarem
     useEffect(() => {
-        const timeout = setTimeout(() => setVisible(true), 10);
-        return () => clearTimeout(timeout);
-    }, []);
+        if (mov === "OUTBOUND" && stockItem && quantity > stockItem.currentStock) {
+            setError("Não é possível retirar mais do que o saldo atual!");
+        } else {
+            setError("");
+        }
+    }, [quantity, mov, stockItem]);
 
-    const handleClose = () => {
-        setVisible(false);
-        setTimeout(() => onClose(), 200);
+    const projectedBalance = () => {
+        if (!stockItem) return null;
+
+        switch (mov) {
+            case "INBOUND":
+                return { value: stockItem.currentStock + quantity, color: "text-green-600", sign: "+" };
+            case "OUTBOUND":
+                return { value: stockItem.currentStock - quantity, color: "text-red-600", sign: "-" };
+            case "FIX":
+                return { value: quantity, color: "text-gray-500", sign: "" };
+            default:
+                return null;
+        }
     };
 
+    const balance = projectedBalance();
+    const canSubmit = !error && quantity > 0 && stockItem && mov;
+
     return (
-        <div
-            className={`fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm transition-all duration-200 ${visible ? "bg-black/40" : "bg-black/0 pointer-events-none"
-                }`}
+        <Modal
+            title="Nova movimentação"
+            onClose={onClose}
+            onSubmit={async () => {
+                if (!canSubmit) return;
+                // lógica de submissão
+            }}
+            submitDisabled={!canSubmit}
         >
-            <div
-                className={`bg-[#f8f9fa] rounded-2xl shadow-xl w-[500px] max-h-[80vh] overflow-y-auto p-6 relative transform transition-all duration-200 ease-in-out ${visible ? "scale-100 opacity-100" : "scale-95 opacity-0"
-                    }`}
-            >
-                <button
-                    onClick={handleClose}
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition cursor-pointer"
-                >
-                    <X className="w-5 h-5" />
-                </button>
-                <h2 className="text-xl font-semibold text-[#1f3449] mb-6 text-center">
-                    Dados da Movimentação
-                </h2>
-                <div className="flex flex-col gap-5 items-center">
-                    <InputNormal placeholder="Código" />
-                    <InputNormal placeholder="Quantidade" />
-                    <InputNormal placeholder="Observação" />
-                    <div className="flex justify-center items-center w-4/5">
-                        <MovSelect
-                            role={mov}
-                            setRole={setMov}
-                        />
-                    </div>
-                </div>
-                <div className="flex justify-center mt-8">
-                    <button
-                        onClick={handleClose}
-                        className="bg-[#175476] text-white font-medium px-6 py-2 rounded-lg shadow hover:bg-[#1f3449] transition duration-200 ease-in"
-                    >
-                        Registrar
-                    </button>
-                </div>
+            <StockItemSelect setStockItem={setStockItem} />
+
+            <div className="flex w-full items-center gap-3">
+                <InputNormal
+                    label="Quantidade"
+                    type="number"
+                    min={0}
+                    required
+                    value={quantity}
+                    onChange={(e) => setQuantity(Number(e.target.value))}
+                />
+                <span className="font-semibold text-2xl">{stockItem?.unitOfMeasurement ?? "?"}</span>
             </div>
-        </div>
+
+            {balance && (
+                <div>
+                    {mov === "FIX" ? (
+                        <span className="text-gray-500 font-semibold">
+                            Novo saldo será: {balance.value} {stockItem?.unitOfMeasurement ?? ""}
+                        </span>
+                    ) : (
+                        <span className="font-semibold">
+                            <span className={`${balance.color}`}>
+                                {balance.sign}{quantity}{stockItem?.unitOfMeasurement ?? ""}
+                            </span>{" "}
+                            <span className="text-gray-500">
+                                | Saldo projetado: {balance.value} {stockItem?.unitOfMeasurement ?? ""}
+                            </span>
+                        </span>
+                    )}
+                </div>
+            )}
+
+            <TextareaNormal
+                label="Observações"
+                rows={4}
+            />
+            <MovSelect
+                mov={mov}
+                setMov={setMov}
+            />
+
+            {error && (
+                <span className="text-red-500 text-sm">{error}</span>
+            )}
+        </Modal>
     );
 };
 

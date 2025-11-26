@@ -12,14 +12,14 @@ const ValuesBar: React.FC<ValuesBarProps> = ({ separated, noSeparated }) => {
             <div className="mt-3 flex items-center justify-center text-center gap-2">
                 <p className="flex items-center justify-center gap-2">
                     <p className="text-[#DA201D] font-bold text-2xl">•</p>
-                    { noSeparated }
+                    {noSeparated}
                 </p>
                 <p className="text-md">Pendente</p>
             </div>
             <div className="mt-3 flex items-center justify-center text-center gap-2">
                 <p className="flex items-center justify-center gap-2">
                     <p className="text-[#33C014] font-bold text-2xl">•</p>
-                    { separated }
+                    {separated}
                 </p>
                 <p className="text-md">Separado</p>
             </div>

@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Menu, ShoppingCart, Bell, Users, Package, Grid } from "lucide-react";
 import WhiteLogo from "../assets/images/logo-branca.png";
-import NotificationModal from "./NotificationModal"; // <--- import aqui
+import NotificationModal from "./NotificationModal";
+import { UserContext } from "../contexts/UserContext";
 
 export default function Sidebar() {
+
+    const { user } = useContext(UserContext);
 
     const notifications = [
         {
@@ -45,9 +48,16 @@ export default function Sidebar() {
         { name: "Requisições de Produção", icon: <ShoppingCart size={22} />, link: "/production" },
         { name: "Estoque", icon: <Grid size={22} />, link: "/" },
         { name: "Notificações", icon: <Bell size={22} />, action: () => setShowNotifications(!showNotifications) },
-        { name: "Usuários", icon: <Users size={22} />, link: "/users" },
+        { name: "Usuários", icon: <Users size={22} />, link: "/users", roles: ["ADMIN", "MANAGER"] },
         { name: "Entrada e Saída", icon: <Package size={22} />, link: "/movs" },
     ];
+
+    const filteredMenuItems = menuItems.filter(item => {
+        if (item.roles) {
+            return user && item.roles.includes(user.role);
+        }
+        return true;
+    });
 
     return (
         <div
@@ -63,7 +73,7 @@ export default function Sidebar() {
                     <Menu size={26} />
                 </div>
                 <nav className="mt-4 flex flex-col">
-                    {menuItems.map((item, idx) => (
+                    {filteredMenuItems.map((item, idx) => (
                         <div
                             key={idx}
                             className="flex items-center gap-3 px-4 py-3 hover:bg-[#22384d] cursor-pointer transition-colors relative"

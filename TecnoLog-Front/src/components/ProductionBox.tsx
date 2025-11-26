@@ -50,7 +50,7 @@ const ProductionBox: React.FC = () => {
                 ))}
             </div>
 
-            <Pagination
+            {/* <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}
                 onPageChange={(page) => {
@@ -58,7 +58,7 @@ const ProductionBox: React.FC = () => {
                         setCurrentPage(page);
                     }
                 }}
-            />
+            /> */}
             {selectedProduction && (
                 <MaterialsModal
                     materials={[

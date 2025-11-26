@@ -15,8 +15,8 @@ interface Item {
 
 const Table: React.FC = () => {
     const generateRandomDate = () => {
-        const start = new Date(2023, 0, 1).getTime(); 
-        const end = new Date(2025, 11, 31).getTime(); 
+        const start = new Date(2023, 0, 1).getTime();
+        const end = new Date(2025, 11, 31).getTime();
         const randomTime = start + Math.random() * (end - start);
         const randomDate = new Date(randomTime);
         return randomDate.toLocaleDateString("pt-BR");
@@ -71,11 +71,11 @@ const Table: React.FC = () => {
                 ))}
             </div>
 
-            <Pagination
+            {/* <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}
-            />
+            /> */}
         </div>
     );
 };

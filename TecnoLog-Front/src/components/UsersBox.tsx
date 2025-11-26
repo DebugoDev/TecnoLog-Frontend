@@ -1,58 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import Pagination from "./Pagination";
+import userService, { type IUser } from "../services/userService";
+import type { IPagination } from "../services/api";
+import { useNavigate } from "react-router-dom";
 
-interface User {
-    name: string;
-    sector: string;
-    completeName: string;
-    email: string;
-    birthDate: string;
+interface UsersBoxProps {
+    search: string
 }
 
-const UsersBox: React.FC = () => {
-    const usersMock: User[] = Array.from({ length: 45 }, (_, i) => ({
-        name: `Usuário ${i + 1}`,
-        sector: ["Logística", "Produção", "Compras", "Qualidade", "Engenharia"][
-            i % 5
-        ],
-        completeName: `Nome Completo do Usuário ${i + 1}`,
-        email: `usuario${i + 1}@tecnotooling.com`,
-        birthDate: `${String((i % 28) + 1).padStart(2, "0")}/${String(
-            (i % 12) + 1
-        ).padStart(2, "0")}/200${i % 10}`,
-    }));
+const UsersBox: React.FC<UsersBoxProps> = ({ search }) => {
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 12;
+    const [pagination, setPagination] = useState<IPagination>({
+        page: 1,
+        pageSize: 12,
+        totalPages: 1,
+        totalItems: 0,
+        hasPreviousPage: false,
+        hasNextPage: false
+    });
 
-    const totalPages = Math.ceil(usersMock.length / itemsPerPage);
+    const navigate = useNavigate();
+    const [data, setData] = useState<IUser[]>();
 
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentUsers = usersMock.slice(startIndex, startIndex + itemsPerPage);
+    const handleUsers = async () => {
+        try {
+            const response = await userService.getPaginated({
+                search, page: pagination.page, size: pagination.pageSize
+            });
+
+            setData(response.paginatedItems);
+            setPagination(response.pagination);
+        } catch (error: any) {
+            navigate("/");
+        }
+    }
+
+    useEffect(() => {
+        setPagination({ ...pagination, page: 1 })
+    }, [search])
+
+    useEffect(() => {
+        handleUsers();
+    }, [pagination.page, search])
 
     return (
         <div className="flex flex-col w-full items-center justify-center h-full">
-            <div className="grid grid-cols-4 gap-6 p-6 w-full ">
-                {currentUsers.map((user, index) => (
+            <div className="grid sm:grid-cols-1 md:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-6 p-6 w-full ">
+                {data?.map((user, index) => (
                     <UserCard
                         key={index}
-                        name={user.name}
-                        sector={user.sector}
-                        completeName={user.completeName}
-                        email={user.email}
-                        birthDate={user.birthDate}
+                        {...user}
                     />
                 ))}
             </div>
             <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={(page) => {
-                    if (page >= 1 && page <= totalPages) {
-                        setCurrentPage(page);
-                    }
-                }}
+                pagination={pagination}
+                onPageChange={(page) => setPagination({ ...pagination, page })}
             />
         </div>
     );

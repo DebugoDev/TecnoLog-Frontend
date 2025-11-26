@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+
 import MainLayout from "../../layouts/MainLayout";
-import UserSearch from "../../components/UserSearch";
-import '../../App.css'
 import UsersBox from "../../components/UsersBox";
+import userService from "../../services/userService";
+import SearchBar from "../../components/SearchBar";
+
+import '../../App.css'
+import UserModal from "../../components/UserModal";
 
 const Users: React.FC = () => {
-  return (
-    <MainLayout
-      title="Usuários"
-      userName="Maria Pimenta"
-      userEmail="maria.log@tecnotooling.com"
-    >
-      <div className="flex flex-col space-y-0">
-        <div className="rounded-2xl shadow-md z-20">
-          <UserSearch title="Usuário" />
-        </div>
-        <UsersBox />
-      </div>
-    </MainLayout>
-  );
+
+    const [search, setSearch] = useState("");
+
+    return (
+        <MainLayout
+            title="Usuários"
+        >
+            <div className="flex flex-col space-y-0">
+                <div className="rounded-2xl shadow-md z-20">
+                    <SearchBar
+                        title="Usuários"
+                        objects="usuários"
+                        search={search}
+                        setSearch={setSearch}
+                        csvImportService={userService.importCsv}
+                        csvExportService={userService.exportCsv}
+                        ModalComponent={UserModal} />
+                </div>
+                <UsersBox search={search} />
+            </div>
+        </MainLayout>
+    );
 };
 
 export default Users;
