@@ -21,7 +21,7 @@ export interface IStockOverview {
     stockValue: number
 }
 
-export interface ICreateStockItemPayload {
+interface ICreateStockItemPayload {
     code: string;
     description?: string;
     unitOfMeasurementId?: string;

@@ -5,6 +5,8 @@ import Modal from "./Modal";
 import StockItemSelect from "./StockItemSelect";
 import type { IStockItem } from "../services/stockItemService";
 import TextareaNormal from "./TextareaNormal";
+import { toast } from "react-toastify";
+import registerService from "../services/RegisterService";
 
 interface MovModalProps {
     onClose: () => void;
@@ -14,9 +16,9 @@ const MovModal: React.FC<MovModalProps> = ({ onClose }) => {
     const [stockItem, setStockItem] = useState<IStockItem>();
     const [mov, setMov] = useState<string>();
     const [quantity, setQuantity] = useState<number>(0);
+    const [observation, setObservation] = useState<string>("");
     const [error, setError] = useState<string>("");
 
-    // Recalcula o erro sempre que quantity, mov ou stockItem mudarem
     useEffect(() => {
         if (mov === "OUTBOUND" && stockItem && quantity > stockItem.currentStock) {
             setError("Não é possível retirar mais do que o saldo atual!");
@@ -41,16 +43,40 @@ const MovModal: React.FC<MovModalProps> = ({ onClose }) => {
     };
 
     const balance = projectedBalance();
-    const canSubmit = !error && quantity > 0 && stockItem && mov;
+
+    const canSubmit =
+        !error &&
+        Number(quantity) > 0 &&
+        stockItem &&
+        mov;
+
+    async function handleSubmit() {
+        if (!canSubmit) return;
+
+        toast.promise(
+            registerService.createRegister({
+                stockItemId: stockItem!.id,
+                amount: quantity,
+                registerType: mov!,
+                observation
+            }),
+            {
+                pending: "Registrando movimentação...",
+                success: "Movimentação registrada!",
+                error: {
+                    render({ data }: any) {
+                        return data?.detail || data?.message || "Erro ao registrar movimentação.";
+                    },
+                },
+            }
+        ).then(onClose);
+    }
 
     return (
         <Modal
             title="Nova movimentação"
             onClose={onClose}
-            onSubmit={async () => {
-                if (!canSubmit) return;
-                // lógica de submissão
-            }}
+            onSubmit={handleSubmit}
             submitDisabled={!canSubmit}
         >
             <StockItemSelect setStockItem={setStockItem} />
@@ -64,14 +90,18 @@ const MovModal: React.FC<MovModalProps> = ({ onClose }) => {
                     value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}
                 />
-                <span className="font-semibold text-2xl">{stockItem?.unitOfMeasurement ?? "?"}</span>
+                <span className="font-semibold text-2xl">
+                    {stockItem?.unitOfMeasurement ?? "?"}
+                </span>
             </div>
 
             {balance && (
                 <div>
                     {mov === "FIX" ? (
-                        <span className="text-gray-500 font-semibold">
-                            Novo saldo será: {balance.value} {stockItem?.unitOfMeasurement ?? ""}
+                        <span className="font-semibold">
+                            <span className="text-gray-500">
+                                Novo saldo será: {balance.value} {stockItem?.unitOfMeasurement ?? ""}
+                            </span>
                         </span>
                     ) : (
                         <span className="font-semibold">
@@ -89,11 +119,11 @@ const MovModal: React.FC<MovModalProps> = ({ onClose }) => {
             <TextareaNormal
                 label="Observações"
                 rows={4}
+                value={observation}
+                onChange={(e) => setObservation(e.target.value)}
             />
-            <MovSelect
-                mov={mov}
-                setMov={setMov}
-            />
+
+            <MovSelect mov={mov} setMov={setMov} />
 
             {error && (
                 <span className="text-red-500 text-sm">{error}</span>
