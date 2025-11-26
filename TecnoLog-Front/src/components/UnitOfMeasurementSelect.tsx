@@ -12,7 +12,7 @@ const UnitOfMeasurementSelect: React.FC<IUnitOfMeasurementSelectProps> = ({ unit
     const [selected, setSelected] = useState<IOptionType | null>(null);
 
     const handleLoad = async () => {
-        const data = await unitOfMeasurementService.getUnitsOfMeasurement();
+        const data = await unitOfMeasurementService.getUnitOfMeasurementValues();
         setOptions(data.values);
 
         if (unitOfMeasurement) {

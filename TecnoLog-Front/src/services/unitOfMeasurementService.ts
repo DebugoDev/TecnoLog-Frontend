@@ -2,7 +2,7 @@ import type { IOptions } from "../components/OptionSelect";
 import api from "./api";
 
 const unitOfMeasurementService = {
-    getUnitsOfMeasurement: async (): Promise<IOptions> => {
+    getUnitOfMeasurementValues: async (): Promise<IOptions> => {
         return await api.get("/units-of-measurement/values");
     }
 };

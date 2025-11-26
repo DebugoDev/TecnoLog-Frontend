@@ -12,7 +12,7 @@ const UserDepartmentSelect: React.FC<IUserDepartmentSelectProps> = ({ userDepart
     const [selected, setSelected] = useState<IOptionType | null>(null);
 
     const handleLoad = async () => {
-        const data = await userDepartmentService.getUserDepartments();
+        const data = await userDepartmentService.getUserDepartmentValues();
         setOptions(data.values);
 
         if (userDepartment) {

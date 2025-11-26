@@ -12,7 +12,7 @@ const StockDepartmentSelect: React.FC<IStockDepartmentSelectProps> = ({ stockDep
     const [selected, setSelected] = useState<IOptionType | null>(null);
 
     const handleLoad = async () => {
-        const data = await stockDepartmentService.getStockDepartments();
+        const data = await stockDepartmentService.getStockDepartmentValues();
         setOptions(data.values);
 
         if (stockDepartment) {
