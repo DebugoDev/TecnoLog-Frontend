@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { X } from "lucide-react";
 import InputNormal from "./InputNormal";
-import MovSelect from "./MovSelect";
-import StockDepartamentSelect from "./StockDepartmentSelect";
 import StockGroupSelect from "./StockGroupSelect";
-import StockSituationSelect from "./StockSituation";
-import UnitOfMeasuarementSelect from "./UnitOfMeasuarementSelect";
-import SubGroupSelect from "./SubGroupSelect";
+import UnitOfMeasurementSelect from "./UnitOfMeasurementSelect";
+import StockSubgroupSelect from "./StockSubgroupSelect";
+import UserDepartmentSelect from "./UserDepartmentSelect";
+import Modal from "./Modal";
+import StockDepartmentSelect from "./StockDepartmentSelect";
 
 interface ProductModalProps {
     onClose: () => void;
@@ -14,10 +13,10 @@ interface ProductModalProps {
 
 const ProductModal: React.FC<ProductModalProps> = ({ onClose }) => {
     const [visible, setVisible] = useState(false);
-    const [departamento, setDepartamento] = useState("");
-    const [group, setGroup] = useState("");
+    const [departamento, setDepartamento] = useState<string>();
+    const [group, setGroup] = useState<string>();
     const [situation, setSituation] = useState("");
-    const [unit, setUnit] = useState("");
+    const [unit, setUnit] = useState<string>();
     const [subgroup, setSub] = useState("");
 
     useEffect(() => {
@@ -31,70 +30,33 @@ const ProductModal: React.FC<ProductModalProps> = ({ onClose }) => {
     };
 
     return (
-        <div
-            className={`fixed inset-0 z-50 flex justify-center items-center backdrop-blur-sm transition-all duration-200 ${visible ? "bg-black/40" : "bg-black/0 pointer-events-none"
-                }`}
+        <Modal
+            title="Cadastrar novo produto"
+            onClose={onClose}
+            onSubmit={async () => { }}
         >
-            <div
-                className={`bg-[#f8f9fa] rounded-2xl shadow-xl w-[500px] max-h-[80vh] overflow-y-auto p-6 relative transform transition-all duration-200 ease-in-out ${visible ? "scale-100 opacity-100" : "scale-95 opacity-0"
-                    }`}
-            >
-                <button
-                    onClick={handleClose}
-                    className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 transition cursor-pointer"
-                >
-                    <X className="w-5 h-5" />
-                </button>
-                <h2 className="text-xl font-semibold text-[#1f3449] mb-6 text-center">
-                    Dados da Movimentação
-                </h2>
-                <div className="flex flex-col gap-5 items-center">
-                    <InputNormal placeholder="Código" />
-                    <InputNormal placeholder="Localização" />
-                    <InputNormal placeholder="Descrição" />
-                    <InputNormal placeholder="Estoque Mínimo" />
-                    <InputNormal placeholder="Custo" />
-                    <div className="flex justify-center items-center w-4/5">
-                        <StockDepartamentSelect
-                            departamento={departamento}
-                            setDepartamento={setDepartamento}
-                        />
-                    </div>
-                    <div className="flex justify-center items-center w-4/5">
-                        <StockGroupSelect
-                            departamento={group}
-                            setDepartamento={setGroup}
-                        />
-                    </div>
-                    <div className="flex justify-center items-center w-4/5">
-                        <StockSituationSelect
-                            departamento={situation}
-                            setDepartamento={setSituation}
-                        />
-                    </div>
-                    <div className="flex justify-center items-center w-4/5">
-                        <UnitOfMeasuarementSelect
-                            departamento={unit}
-                            setDepartamento={setUnit}
-                        />
-                    </div>
-                    <div className="flex justify-center items-center w-4/5">
-                        <SubGroupSelect
-                            departamento={subgroup}
-                            setDepartamento={setSub}
-                        />
-                    </div>
-                </div>
-                <div className="flex justify-center mt-8">
-                    <button
-                        onClick={handleClose}
-                        className="bg-[#175476] text-white font-medium px-6 py-2 rounded-lg shadow hover:bg-[#1f3449] transition duration-200 ease-in"
-                    >
-                        Registrar
-                    </button>
-                </div>
-            </div>
-        </div>
+            <InputNormal label="CÓDIGO - GRV" maxLength={50} required />
+            <InputNormal label="Descrição" maxLength={500} required />
+            <UnitOfMeasurementSelect
+                unitOfMeasurement={unit}
+                setUnitOfMeasurement={setUnit}
+            />
+            <InputNormal label="Localização" maxLength={255} />
+            <StockDepartmentSelect
+                stockDepartment={departamento}
+                setStockDepartment={setDepartamento}
+            />
+            <StockGroupSelect
+                stockGroup={group}
+                setStockGroup={setGroup}
+            />
+            <StockSubgroupSelect
+                departamento={subgroup}
+                setDepartamento={setSub}
+            />
+            <InputNormal label="Custo" type="number" min="0.00" step="0.01" />
+            <InputNormal label="Estoque Mínimo" type="number" />
+        </Modal>
     );
 };
 

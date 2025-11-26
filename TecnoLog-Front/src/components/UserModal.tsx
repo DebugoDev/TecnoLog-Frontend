@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import InputNormal from "./InputNormal";
-import DepartmentSelect from "./DepartmentSelect";
 import { toast } from "react-toastify";
 import userService from "../services/userService";
+import UserDepartmentSelect from "./UserDepartmentSelect";
 
 interface UserModalProps {
     onClose: () => void;
@@ -50,7 +50,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
             />
             <InputNormal label="Nome" value={name} onChange={(e) => setName(e.target.value)} required />
             <InputNormal label="Email" value={email} type="email" onChange={(e) => setEmail(e.target.value)} />
-            <DepartmentSelect department={department} setDepartment={setDepartment} />
+            <UserDepartmentSelect userDepartment={department} setUserDepartment={setDepartment} />
         </Modal>
     );
 };

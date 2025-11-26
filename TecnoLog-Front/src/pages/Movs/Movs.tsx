@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout";
 import SearchBar from "../../components/SearchBar";
 import '../../App.css'
 import TableMovs from "../../components/TableMovs";
+import MovModal from "../../components/MovModal";
 
 const Stock: React.FC = () => {
     return (
@@ -17,7 +18,7 @@ const Stock: React.FC = () => {
                         throw new Error("Function not implemented.");
                     }} csvExportService={function (): Promise<void> {
                         throw new Error("Function not implemented.");
-                    }} ModalComponent={undefined} />
+                    }} ModalComponent={MovModal} />
                 </div>
             </div>
             <TableMovs />

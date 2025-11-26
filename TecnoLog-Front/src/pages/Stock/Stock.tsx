@@ -8,6 +8,7 @@ import '../../App.css'
 import type { IStockItem, IStockOverview } from "../../services/stockItemService";
 import stockItemService from "../../services/stockItemService";
 import type { IPagination } from "../../services/api";
+import ProductModal from "../../components/ProductModal";
 
 const Stock: React.FC = () => {
 
@@ -49,7 +50,7 @@ const Stock: React.FC = () => {
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                    <SearchBar title={"Produto"} objects={"produtos"} search={search} setSearch={setSearch} csvImportService={stockItemService.importCsv} csvExportService={stockItemService.exportCsv} />
+                    <SearchBar title={"Produto"} objects={"produtos"} search={search} setSearch={setSearch} csvImportService={stockItemService.importCsv} csvExportService={stockItemService.exportCsv} ModalComponent={ProductModal} />
                 </div>
                 <div className="rounded-2xl shadow-md -mt-4">
                     <ValuesBar overview={overview} />
