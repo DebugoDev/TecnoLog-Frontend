@@ -1,12 +1,22 @@
 ﻿const BASE_URL = import.meta.env.VITE_API_URL;
 
 export interface IPagination {
-    page: number;
-    pageSize: number;
-    totalPages: number;
-    totalItems: number;
-    hasPreviousPage: boolean;
-    hasNextPage: boolean;
+    page: number
+    pageSize: number
+    totalPages: number
+    totalItems: number
+    hasPreviousPage: boolean
+    hasNextPage: boolean
+}
+
+export interface IObjectNameResponse {
+    id: string
+    createdAt: Date
+    name: string
+}
+
+export interface ICreateObjectName {
+    name: string
 }
 
 interface RequestOptions extends RequestInit {
