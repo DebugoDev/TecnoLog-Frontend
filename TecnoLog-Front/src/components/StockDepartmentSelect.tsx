@@ -35,6 +35,7 @@ const StockDepartmentSelect: React.FC<IStockDepartmentSelectProps> = ({ stockDep
                 setSelected(opt);
                 setStockDepartment(opt?.value);
             }}
+            required
         />
     );
 };

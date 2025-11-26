@@ -32,6 +32,7 @@ const StockGroupSelect: React.FC<IStockGroupSelectProps> = ({ stockGroup, setSto
                 setSelected(opt);
                 setStockGroup(opt?.value);
             }}
+            required
         />
     );
 };
