@@ -10,13 +10,13 @@ export interface IOptionType {
     label: string
 }
 
-interface IOptionSelectProps extends Omit<SelectProps<IOptionType, false>, "value" | "onChange"> {
+export interface IOptionSelectProps extends Omit<SelectProps<IOptionType, false>, "value" | "onChange"> {
     label: string
     value: IOptionType | null
     onChangeValue: (value: IOptionType | null) => void
 }
 
-const customStyles: StylesConfig<IOptionType, false> = {
+export const customStyles: StylesConfig<IOptionType, false> = {
     control: (base, state) => ({
         ...base,
         backgroundColor: "#f8f9fa",
@@ -84,10 +84,11 @@ const OptionSelect: React.FC<IOptionSelectProps> = ({ label, value, onChangeValu
                 styles={customStyles}
                 value={value}
                 onChange={(selected) => onChangeValue(selected ?? null)}
-                placeholder={label}
+                placeholder={`${label} ${rest.required ? "*" : ""}`}
                 isSearchable={false}
                 menuPortalTarget={document.body}
                 menuPosition="fixed"
+                isClearable={!rest.required}
             />
 
         </div>
