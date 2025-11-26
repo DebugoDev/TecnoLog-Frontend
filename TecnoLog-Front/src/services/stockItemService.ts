@@ -1,4 +1,5 @@
-﻿import type { IPagination } from "./api"
+﻿import type { IOptions } from "../components/OptionSelect"
+import type { IPagination } from "./api"
 import api from "./api"
 
 export interface IStockItem {
@@ -21,9 +22,9 @@ export interface IStockOverview {
 }
 
 interface IGetPaginatedStockItemsRequest {
-    search: string
-    page: number
-    size: number
+    search?: string
+    page?: number
+    size?: number
 }
 
 interface IGetPaginatedStockItemsResponse {
@@ -37,12 +38,16 @@ interface IImportStockItemsCsv {
 }
 
 const stockItemService = {
+    getStockItemValues: async (): Promise<IOptions> => {
+        return await api.get("/stock-items/values");
+    },
+
     getPaginated: async ({ search, page, size }: IGetPaginatedStockItemsRequest): Promise<IGetPaginatedStockItemsResponse> => {
         const params = new URLSearchParams();
 
-        params.append("query", search);
-        params.append("page", page.toString());
-        params.append("count", size.toString());
+        if (search) params.append("query", search);
+        if (page) params.append("page", page.toString());
+        if (size) params.append("count", size.toString());
 
         return await api.get(`/stock-items/paginated?${params}`);
     },

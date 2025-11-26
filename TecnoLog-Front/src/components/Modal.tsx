@@ -7,9 +7,10 @@ interface IModalProps {
     onClose: () => void
     children?: React.ReactNode
     onSubmit: () => Promise<any>
+    submitDisabled?: boolean
 }
 
-const Modal: React.FC<IModalProps> = ({ title, onClose, children, onSubmit }) => {
+const Modal: React.FC<IModalProps> = ({ title, onClose, children, onSubmit, submitDisabled }) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -51,7 +52,7 @@ const Modal: React.FC<IModalProps> = ({ title, onClose, children, onSubmit }) =>
                         {children}
                     </div>
                     <div className="flex justify-center mt-5">
-                        <Button title={"Registrar"} type="submit" />
+                        <Button title={"Registrar"} type="submit" disabled={submitDisabled} />
                     </div>
                 </form>
             </div>

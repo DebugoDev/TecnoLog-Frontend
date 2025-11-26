@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import OptionSelect, { type IOptionType } from "./OptionSelect";
 
-interface IStockGroupProps {
+interface IStockGroupSelectProps {
     stockGroup?: string
     setStockGroup: React.Dispatch<React.SetStateAction<string | undefined>>
 }
 
-const StockGroup: React.FC<IStockGroupProps> = ({ stockGroup, setStockGroup }) => {
+const StockGroupSelect: React.FC<IStockGroupSelectProps> = ({ stockGroup, setStockGroup }) => {
     const [selected, setSelected] = useState<IOptionType | null>(null);
 
     const options: IOptionType[] = [
@@ -36,4 +36,4 @@ const StockGroup: React.FC<IStockGroupProps> = ({ stockGroup, setStockGroup }) =
     );
 };
 
-export default StockGroup;
+export default StockGroupSelect;
