@@ -1,82 +1,103 @@
-import React, { useState } from "react";
+// components/ProductionBox.tsx
+import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
-import ProductionCard from "./ProductionCard";
 import MaterialsModal from "./MaterialsModal";
+import ProductionCard from "./ProductionCard";
+import type { IPagination } from "../services/api";
 
 interface Production {
     idCustomer: string;
     customer: string;
+    status: string;
     materialOne: string;
     materialTwo: string;
     materialThree: string;
-    idOrder: string;
-    status: string;
 }
 
-const ProductionBox: React.FC = () => {
-    const productionMock: Production[] = Array.from({ length: 45 }, (_, i) => ({
+interface ProductionBoxProps {
+    search: string;
+}
+
+const ProductionBox: React.FC<ProductionBoxProps> = ({ search }) => {
+
+    const [pagination, setPagination] = useState<IPagination>({
+        page: 1,
+        pageSize: 12,
+        totalPages: 1,
+        totalItems: 0,
+        hasPreviousPage: false,
+        hasNextPage: false
+    });
+
+    const [data, setData] = useState<Production[]>([]);
+    const [selected, setSelected] = useState<Production | null>(null);
+
+    const mockData: Production[] = Array.from({ length: 80 }, (_, i) => ({
         idCustomer: `${1000 + i}`,
         customer: `Cliente ${i + 1}`,
-        materialOne: `Material 1`,
-        materialTwo: `Material 2`,
-        materialThree: `Material 3`,
-        idOrder: `${1000 + i}`,
-        status: i % 2 === 0 ? "Separado" : "Não Separado",
+        materialOne: "Material A",
+        materialTwo: "Material B",
+        materialThree: "Material C",
+        status: i % 2 === 0 ? "Separado" : "Pendente",
     }));
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [selectedProduction, setSelectedProduction] = useState<Production | null>(null);
+    const handleProduction = async () => {
+        const filtered = mockData.filter(item =>
+            item.customer.toLowerCase().includes(search.toLowerCase())
+        );
 
-    const itemsPerPage = 12;
-    const totalPages = Math.ceil(productionMock.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentUsers = productionMock.slice(startIndex, startIndex + itemsPerPage);
+        const start = (pagination.page - 1) * pagination.pageSize;
+        const end = start + pagination.pageSize;
+
+        setData(filtered.slice(start, end));
+
+        setPagination(prev => ({
+            ...prev,
+            totalItems: filtered.length,
+            totalPages: Math.ceil(filtered.length / prev.pageSize)
+        }));
+    };
+
+    useEffect(() => {
+        setPagination({ ...pagination, page: 1 });
+    }, [search]);
+
+    useEffect(() => {
+        handleProduction();
+    }, [pagination.page, search]);
 
     return (
-        <div className="flex flex-col w-full items-center justify-center h-full relative">
-            <div className="grid grid-cols-4 gap-6 p-6 w-full">
-                {currentUsers.map((product, index) => (
+        <div className="flex flex-col w-full items-center justify-center h-full">
+            <div className="grid sm:grid-cols-1 md:grid-cols-2  xl:grid-cols-3 2xl:grid-cols-4 gap-6 p-6 w-full ">
+                {data.map((item, index) => (
                     <ProductionCard
                         key={index}
-                        idCustomer={product.idCustomer}
-                        customer={product.customer}
-                        materialOne={product.materialOne}
-                        materialTwo={product.materialTwo}
-                        materialThree={product.materialThree}
-                        idOrder={product.idOrder}
-                        status={product.status}
-                        onClick={() => setSelectedProduction(product)}
+                        {...item}
+                        onClick={() => setSelected(item)}
                     />
                 ))}
             </div>
 
-            {/* <Pagination
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={(page) => {
-                    if (page >= 1 && page <= totalPages) {
-                        setCurrentPage(page);
-                    }
-                }}
-            /> */}
-            {selectedProduction && (
+            <Pagination
+                pagination={pagination}
+                onPageChange={(page) => setPagination({ ...pagination, page })}
+            />
+
+            {selected && (
                 <MaterialsModal
                     materials={[
-                        { nome: selectedProduction.materialOne, quantidade: 120 },
-                        { nome: selectedProduction.materialTwo, quantidade: 80 },
-                        { nome: selectedProduction.materialThree, quantidade: 200 },
+                        { nome: selected.materialOne, quantidade: 100 },
+                        { nome: selected.materialTwo, quantidade: 150 },
+                        { nome: selected.materialThree, quantidade: 200 },
                     ]}
                     customerData={{
-                        idCliente: selectedProduction.idCustomer,
-                        nomeCliente: selectedProduction.customer,
-                        valorTotal: "R$ 2.300,00",
-                        endereco: "Rua das Indústrias, 450 - Campinas/SP",
-                        cnpj: "12.345.678/0001-90",
-                        telefone: "(19) 99999-8888",
-                        dataPedido: "10/11/2025",
-                        dataEntrega: "15/11/2025",
+                        idCliente: selected.idCustomer,
+                        nomeCliente: selected.customer,
+                        valorTotal: "R$ 1.500,00",
+                        endereco: "Rua X, 123",
+                        telefone: "(11) 99999-0000",
                     }}
-                    onClose={() => setSelectedProduction(null)}
+                    onClose={() => setSelected(null)}
                 />
             )}
         </div>

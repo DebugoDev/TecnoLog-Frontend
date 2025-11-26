@@ -6,7 +6,7 @@ interface ValuesBarProps {
     overview?: IStockOverview
 }
 
-const ValuesBar: React.FC<ValuesBarProps> = ({ overview }) => {
+const StockValuesBar: React.FC<ValuesBarProps> = ({ overview }) => {
     return (
         <div className="w-auto bg-[#e0e0e0] h-24 rounded-t-none rounded-2xl flex items-center justify-end top-20 gap-10">
             <div className="mt-3 flex items-center justify-center text-center gap-2">
@@ -38,4 +38,4 @@ const ValuesBar: React.FC<ValuesBarProps> = ({ overview }) => {
     );
 };
 
-export default ValuesBar;
+export default StockValuesBar;

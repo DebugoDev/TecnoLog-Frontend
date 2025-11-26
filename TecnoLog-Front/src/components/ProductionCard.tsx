@@ -33,7 +33,7 @@ const ProductionCard: React.FC<ProductionCardProps> = ({
     return (
         <div
             onClick={onClick}
-            className="bg-[#f8f9fa] flex shadow-lg rounded-3xl p-5 flex-col gap-2 cursor-pointer hover:shadow-xl hover:scale-[1.01] transition-all"
+            className="bg-[#f8f9fa] flex shadow-lg rounded-3xl p-5 flex-col gap-4 cursor-pointer hover:shadow-xl hover:scale-[1.01] transition-all"
         >
             <div className="flex justify-between w-full">
                 <div className="w-full flex gap-2 items-center">

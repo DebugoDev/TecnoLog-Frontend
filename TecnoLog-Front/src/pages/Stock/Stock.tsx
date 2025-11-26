@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
 import SearchBar from "../../components/SearchBar";
-import ValuesBar from "../../components/ValuesBar";
+import StockValuesBar from "../../components/StockValuesBar";
 import Table from "../../components/Table";
 
 import '../../App.css'
@@ -50,10 +50,10 @@ const Stock: React.FC = () => {
         >
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                    <SearchBar title={"Produto"} objects={"produtos"} search={search} setSearch={setSearch} csvImportService={stockItemService.importCsv} csvExportService={stockItemService.exportCsv} ModalComponent={ProductModal} />
+                    <SearchBar title="Produto" objects="produtos" search={search} setSearch={setSearch} csvImportService={stockItemService.importCsv} csvExportService={stockItemService.exportCsv} ModalComponent={ProductModal} />
                 </div>
                 <div className="rounded-2xl shadow-md -mt-4">
-                    <ValuesBar overview={overview} />
+                    <StockValuesBar overview={overview} />
                 </div>
             </div>
             <Table pagination={pagination} setPagination={setPagination} paginatedItems={data} />
