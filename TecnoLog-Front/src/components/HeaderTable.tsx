@@ -15,7 +15,7 @@ const HeaderTable: React.FC<HeaderTableProps> = ({ columnOne, columnTwo, columnT
                     grid
                     grid-cols-[100px_200px_minmax(500px,1fr)_200px_250px_250px_50px]
                     items-center
-                    h-12
+                    h-12 gap-x-4
                     font-medium
                     border-b
                     border-[#d6d6d6]

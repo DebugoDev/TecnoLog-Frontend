@@ -1,16 +1,18 @@
 ﻿import type { IOptions } from "../components/OptionSelect"
-import type { IPagination } from "./api"
+import type { StockGroup } from "../types/StockGroup"
+import type { StockItemStatus } from "../types/StockItemStatus"
+import type { IGetPaginatedRequest, IPagination } from "./api"
 import api from "./api"
 
 export interface IStockItem {
     code: string
     description: string
-    stockGroup: "DIRECT" | "INDIRECT" | "CONSUMPTION"
+    stockGroup: StockGroup
     currentStock: number
     unitOfMeasurement: string
     stockValue: number
     minimumStock: number
-    status: "INSTOCK" | "LOWSTOCK" | "OUTOFSTOCK"
+    status: StockItemStatus
     id: string
     createdAt: Date
 }
@@ -33,12 +35,6 @@ interface ICreateStockItemPayload {
     minimumStock?: number;
 }
 
-interface IGetPaginatedStockItemsRequest {
-    search?: string
-    page?: number
-    size?: number
-}
-
 interface IGetPaginatedStockItemsResponse {
     overview: IStockOverview
     paginatedItems: IStockItem[]
@@ -59,7 +55,7 @@ const stockItemService = {
         return await api.get("/stock-items/values");
     },
 
-    getPaginated: async ({ search, page, size }: IGetPaginatedStockItemsRequest): Promise<IGetPaginatedStockItemsResponse> => {
+    getPaginated: async ({ search, page, size }: IGetPaginatedRequest): Promise<IGetPaginatedStockItemsResponse> => {
         const params = new URLSearchParams();
 
         if (search) params.append("query", search);
