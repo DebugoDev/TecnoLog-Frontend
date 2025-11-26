@@ -88,7 +88,7 @@ const OptionSelect: React.FC<IOptionSelectProps> = ({ label, value, onChangeValu
                 isSearchable={false}
                 menuPortalTarget={document.body}
                 menuPosition="fixed"
-                isClearable={!rest.required}
+                isClearable={rest.isClearable ?? !rest.required}
             />
 
         </div>

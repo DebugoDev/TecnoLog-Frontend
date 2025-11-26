@@ -20,7 +20,7 @@ const CreatableOptionSelect: React.FC<ICreatableOptionSelectProps> = ({ label, v
                 placeholder={`${label} ${rest.required ? "*" : ""}`}
                 menuPortalTarget={document.body}
                 menuPosition="fixed"
-                isClearable={!rest.required}
+                isClearable={rest.isClearable ?? !rest.required}
                 isSearchable={true}
             />
         </div>
