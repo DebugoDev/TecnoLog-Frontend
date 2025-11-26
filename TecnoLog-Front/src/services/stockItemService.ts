@@ -21,6 +21,18 @@ export interface IStockOverview {
     stockValue: number
 }
 
+export interface ICreateStockItemPayload {
+    code: string;
+    description?: string;
+    unitOfMeasurementId?: string;
+    localization?: string;
+    stockDepartmentId?: string;
+    stockGroup?: string;
+    stockSubgroupId?: string;
+    cost?: number;
+    minimumStock?: number;
+}
+
 interface IGetPaginatedStockItemsRequest {
     search?: string
     page?: number
@@ -38,6 +50,11 @@ interface IImportStockItemsCsv {
 }
 
 const stockItemService = {
+    createStockItem: async (payload: ICreateStockItemPayload) => {
+        const { data } = await api.post("/stock-items", payload);
+        return data;
+    },
+
     getStockItemValues: async (): Promise<IOptions> => {
         return await api.get("/stock-items/values");
     },

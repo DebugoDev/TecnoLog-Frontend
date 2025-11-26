@@ -12,7 +12,7 @@ const StockGroupSelect: React.FC<IStockGroupSelectProps> = ({ stockGroup, setSto
     const options: IOptionType[] = [
         { value: "DIRECT", label: "Diretos" },
         { value: "INDIRECT", label: "Indiretos" },
-        { value: "CONSUMO", label: "Consumo" },
+        { value: "CONSUMPTION", label: "Consumo" },
     ];
 
     useEffect(() => {
