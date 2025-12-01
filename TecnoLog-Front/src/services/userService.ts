@@ -1,24 +1,19 @@
 ﻿import type { IOptions } from "../components/OptionSelect";
-import api, { type IPagination } from "./api";
+import type { Role, RoleWithoutData } from "../types/Role";
+import api, { type IGetPaginatedRequest, type IPagination } from "./api";
 
 export interface IUser {
     code: number
     name: string
     userDepartment: string
     email: string
-    role: "ADMIN" | "MANAGER" | "USER" | "DATA"
+    role: Role
     profile: {
         abbreviation: string
         color: string
     },
     id: string
     createdAt: Date
-}
-
-interface IGetPaginatedUsersRequest {
-    search: string
-    page: number
-    size: number
 }
 
 interface IGetPaginatedUsersResponse {
@@ -32,7 +27,7 @@ interface IImportUsersCsv {
 
 interface IRegisterNewUser {
     userId: string
-    userRole: "ADMIN" | "MANAGER" | "USER"
+    userRole: RoleWithoutData
 }
 
 interface ICompleteUserRegistration {
@@ -52,16 +47,16 @@ interface IUpdateUser {
     email?: string
     password?: string
     userDepartmentId?: string
-    userRole?: "ADMIN" | "MANAGER" | "USER" | "DATA"
+    userRole?: Role
 }
 
 const userService = {
-    getPaginated: async ({ search, page, size }: IGetPaginatedUsersRequest): Promise<IGetPaginatedUsersResponse> => {
+    getPaginated: async ({ search, page, size }: IGetPaginatedRequest): Promise<IGetPaginatedUsersResponse> => {
         const params = new URLSearchParams();
 
-        params.append("query", search);
-        params.append("page", page.toString());
-        params.append("count", size.toString());
+        if (search) params.append("query", search);
+        if (page) params.append("page", page.toString());
+        if (size) params.append("count", size.toString());
 
         return await api.get(`/users/paginated?${params}`);
     },

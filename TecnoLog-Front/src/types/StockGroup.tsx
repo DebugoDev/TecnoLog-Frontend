@@ -1,0 +1,1 @@
+﻿export type StockGroup = "DIRECT" | "INDIRECT" | "CONSUMPTION"

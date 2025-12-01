@@ -63,6 +63,7 @@ const StockSubgroupSelect: React.FC<IStockSubgroupSelectProps> = ({
                 setSelected(opt);
                 setStockSubGroup(opt?.value);
             }}
+            required
         />
     );
 };

@@ -12,8 +12,8 @@ interface SearchBarProps {
     objects: string
     search: string
     setSearch: Dispatch<SetStateAction<string>>
-    csvImportService: (file: File) => Promise<any>
-    csvExportService: () => Promise<void>
+    csvImportService?: (file: File) => Promise<any>
+    csvExportService?: () => Promise<void>
     ModalComponent: React.FC<{ onClose: () => void }>;
 }
 
@@ -32,7 +32,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch
         }
 
         toast.promise(
-            csvImportService(file),
+            csvImportService!(file),
             {
                 pending: "Importando...",
                 success: {
@@ -70,8 +70,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ title, objects, search, setSearch
                         </a>
                     </div>
                     <div className="flex gap-2 h-12">
-                        <ButtonIcon icon={FolderUp} tooltip="Exportar CSV" onClick={csvExportService} />
-                        <ButtonImportFile handleFileChange={handleFileChange} />
+                        {
+                            csvExportService &&
+                            <ButtonIcon icon={FolderUp} tooltip="Exportar CSV" onClick={csvExportService} />
+                        }
+                        {
+                            csvImportService &&
+                            <ButtonImportFile handleFileChange={handleFileChange} />
+                        }
                         <Button title={`+ ${title}`} onClick={() => setShowModal(true)} />
                     </div>
                 </div>

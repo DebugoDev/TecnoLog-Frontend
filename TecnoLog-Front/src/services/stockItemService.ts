@@ -1,16 +1,18 @@
 ﻿import type { IOptions } from "../components/OptionSelect"
-import type { IPagination } from "./api"
+import type { StockGroup } from "../types/StockGroup"
+import type { StockItemStatus } from "../types/StockItemStatus"
+import type { IGetPaginatedRequest, IPagination } from "./api"
 import api from "./api"
 
 export interface IStockItem {
     code: string
     description: string
-    stockGroup: "DIRECT" | "INDIRECT" | "CONSUMPTION"
+    stockGroup: StockGroup
     currentStock: number
     unitOfMeasurement: string
     stockValue: number
     minimumStock: number
-    status: "INSTOCK" | "LOWSTOCK" | "OUTOFSTOCK"
+    status: StockItemStatus
     id: string
     createdAt: Date
 }
@@ -21,10 +23,16 @@ export interface IStockOverview {
     stockValue: number
 }
 
-interface IGetPaginatedStockItemsRequest {
-    search?: string
-    page?: number
-    size?: number
+interface ICreateStockItemPayload {
+    code: string;
+    description?: string;
+    unitOfMeasurementId?: string;
+    localization?: string;
+    stockDepartmentId?: string;
+    stockGroup?: string;
+    stockSubgroupId?: string;
+    cost?: number;
+    minimumStock?: number;
 }
 
 interface IGetPaginatedStockItemsResponse {
@@ -38,11 +46,16 @@ interface IImportStockItemsCsv {
 }
 
 const stockItemService = {
+    createStockItem: async (payload: ICreateStockItemPayload) => {
+        const { data } = await api.post("/stock-items", payload);
+        return data;
+    },
+
     getStockItemValues: async (): Promise<IOptions> => {
         return await api.get("/stock-items/values");
     },
 
-    getPaginated: async ({ search, page, size }: IGetPaginatedStockItemsRequest): Promise<IGetPaginatedStockItemsResponse> => {
+    getPaginated: async ({ search, page, size }: IGetPaginatedRequest): Promise<IGetPaginatedStockItemsResponse> => {
         const params = new URLSearchParams();
 
         if (search) params.append("query", search);

@@ -1,26 +1,38 @@
-import React from "react";
+// pages/Production/index.tsx
+import React, { useState, useEffect } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import '../../App.css'
+import ProductionValuesBar from "../../components/ProductionValuesBar";
 import ProductionBox from "../../components/ProductionBox";
-import ProductionBar from "../../components/ProductionBar";
-import ProductionSearch from "../../components/ProductionSearch";
+import SearchBar from "../../components/SearchBar";
+import UserModal from "../../components/UserModal";
 
 const Production: React.FC = () => {
+
+    const [search, setSearch] = useState("");
+    const [overview, setOverview] = useState({
+        separated: 10,
+        pending: 5,
+    });
+
     return (
-        <MainLayout
-            title="Requisições de Produção"
-            userName="Maria Pimenta"
-            userEmail="maria.log@tecnotooling.com"
-        >
+        <MainLayout title="Requisições de Produção">
             <div className="flex flex-col space-y-0">
                 <div className="rounded-2xl shadow-md z-20">
-                    <ProductionSearch />
+                    <SearchBar
+                        title="Requisição"
+                        objects="requisições"
+                        search={search}
+                        setSearch={setSearch}
+                        ModalComponent={UserModal}
+                    />
                 </div>
+
                 <div className="rounded-2xl shadow-md -mt-4">
-                    <ProductionBar separated={"7"} noSeparated={"6"} />
+                    <ProductionValuesBar overview={overview} />
                 </div>
+                <ProductionBox search={search} />
             </div>
-            <ProductionBox />
+
         </MainLayout>
     );
 };

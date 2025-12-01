@@ -11,12 +11,16 @@ interface UserModalProps {
 
 const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
 
-    const [code, setCode] = useState(0);
-    const [name, setName] = useState("");
+    const [code, setCode] = useState<number>(0);
+    const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>();
     const [department, setDepartment] = useState<string>();
 
+    const canSubmit = !!code && !!name;
+
     async function handleSubmit() {
+        if (!canSubmit) return;
+
         toast.promise(
             userService.createUser({
                 code, name, email, userDepartmentId: department
@@ -39,6 +43,7 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
             title="Dados do Usuário"
             onClose={onClose}
             onSubmit={handleSubmit}
+            submitDisabled={!canSubmit}
         >
             <InputNormal
                 label="Código"
@@ -48,9 +53,22 @@ const UserModal: React.FC<UserModalProps> = ({ onClose }) => {
                 onChange={(e) => setCode(Number(e.target.value))}
                 required
             />
-            <InputNormal label="Nome" value={name} onChange={(e) => setName(e.target.value)} required />
-            <InputNormal label="Email" value={email} type="email" onChange={(e) => setEmail(e.target.value)} />
-            <UserDepartmentSelect userDepartment={department} setUserDepartment={setDepartment} />
+            <InputNormal
+                label="Nome"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+            />
+            <InputNormal
+                label="Email"
+                value={email}
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+            />
+            <UserDepartmentSelect
+                userDepartment={department}
+                setUserDepartment={setDepartment}
+            />
         </Modal>
     );
 };

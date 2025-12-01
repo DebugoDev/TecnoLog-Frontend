@@ -1,0 +1,1 @@
+﻿export type RegisterType = "INBOUND" | "OUTBOUND" | "FIX";

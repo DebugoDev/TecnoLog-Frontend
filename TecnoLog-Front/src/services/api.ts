@@ -9,6 +9,12 @@ export interface IPagination {
     hasNextPage: boolean
 }
 
+export interface IGetPaginatedRequest {
+    search?: string
+    page?: number
+    size?: number
+}
+
 export interface IObjectNameResponse {
     id: string
     createdAt: Date
